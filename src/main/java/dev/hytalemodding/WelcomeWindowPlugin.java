@@ -5,13 +5,13 @@ import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import dev.hytalemodding.commands.ExampleCommand;
 import dev.hytalemodding.commands.UIExampleCommand;
-import dev.hytalemodding.events.ExampleEvent;
+import dev.hytalemodding.events.WelcomeWindowEvent;
 
 import javax.annotation.Nonnull;
 
-public class WelcomeWindow extends JavaPlugin {
+public class WelcomeWindowPlugin extends JavaPlugin {
 
-    public WelcomeWindow(@Nonnull JavaPluginInit init) {
+    public WelcomeWindowPlugin(@Nonnull JavaPluginInit init) {
         super(init);
     }
 
@@ -19,6 +19,6 @@ public class WelcomeWindow extends JavaPlugin {
     protected void setup() {
         this.getCommandRegistry().registerCommand(new ExampleCommand("example", "An example command"));
         this.getCommandRegistry().registerCommand(new UIExampleCommand()); // HyUI example: /ui
-        this.getEventRegistry().registerGlobal(PlayerReadyEvent.class, ExampleEvent::onPlayerReady);
+        this.getEventRegistry().registerGlobal(PlayerReadyEvent.class, WelcomeWindowEvent::onPlayerReady);
     }
 }
