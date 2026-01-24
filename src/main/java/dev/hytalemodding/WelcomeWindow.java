@@ -9,9 +9,9 @@ import dev.hytalemodding.events.ExampleEvent;
 
 import javax.annotation.Nonnull;
 
-public class ExamplePlugin extends JavaPlugin {
+public class WelcomeWindow extends JavaPlugin {
 
-    public ExamplePlugin(@Nonnull JavaPluginInit init) {
+    public WelcomeWindow(@Nonnull JavaPluginInit init) {
         super(init);
     }
 
