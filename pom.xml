@@ -21,6 +21,15 @@
             <version>1.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <!-- HyUI library for building UIs with HYUIML (HTML-like syntax) -->
+        <!-- See docs/HyUI - Hytale Mods - CurseForge.html for documentation -->
+        <dependency>
+            <groupId>au.ellie</groupId>
+            <artifactId>HyUI</artifactId>
+            <version>0.5.2</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/HyUI-0.5.2-all.jar</systemPath>
+        </dependency>
     </dependencies>
 
     <build>
