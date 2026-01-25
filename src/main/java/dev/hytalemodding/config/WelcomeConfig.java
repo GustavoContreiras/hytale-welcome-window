@@ -10,6 +10,7 @@ public class WelcomeConfig {
     private Integer containerWidth;
     private Integer containerHeight;
     private Integer fontSize;
+    private Boolean alwaysShow;
     private List<PageConfig> pages;
 
     public WelcomeConfig() {
@@ -75,6 +76,14 @@ public class WelcomeConfig {
 
     public void setFontSize(Integer fontSize) {
         this.fontSize = fontSize;
+    }
+
+    public Boolean getAlwaysShow() {
+        return alwaysShow;
+    }
+
+    public void setAlwaysShow(Boolean alwaysShow) {
+        this.alwaysShow = alwaysShow;
     }
 
     public List<PageConfig> getPages() {

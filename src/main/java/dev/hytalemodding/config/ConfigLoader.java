@@ -106,9 +106,10 @@ public class ConfigLoader {
         defaultConfig.setContainerWidth(800);
         defaultConfig.setContainerHeight(500);
         defaultConfig.setFontSize(18);
+        defaultConfig.setAlwaysShow(true);
         
         PageConfig page1 = new PageConfig();
-        page1.setTitle("Welcome");
+        page1.setTitle("Welcome to Hytale");
         page1.setButtonTitle("Welcome");
         page1.setParagraphs(List.of(
             "Here are some available commands:",

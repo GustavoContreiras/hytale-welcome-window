@@ -25,7 +25,14 @@ public class WelcomeWindowEvent {
         Player player = event.getPlayer();
         player.sendMessage(Message.raw("[WelcomeWindow] start"));
 
-        WelcomeWindowEvent.openWelcomeWindow(player);
+        // Load configuration to check alwaysShow setting
+        WelcomeConfig config = ConfigLoader.loadConfig(player);
+        boolean alwaysShow = config.getAlwaysShow() != null ? config.getAlwaysShow() : true;
+
+        // Show window if alwaysShow is true, or if it's the player's first spawn
+        if (alwaysShow || player.isFirstSpawn()) {
+            WelcomeWindowEvent.openWelcomeWindow(player);
+        }
     }
 
     public static void openWelcomeWindow(Player player) {
