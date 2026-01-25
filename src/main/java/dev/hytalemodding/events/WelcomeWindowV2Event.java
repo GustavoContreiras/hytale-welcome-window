@@ -81,18 +81,18 @@ public class WelcomeWindowV2Event {
             html.append("<div class=\"page-overlay\">\n");
             html.append("<div class=\"container\" data-hyui-title=\"" + pageTitle + "\">\n");
             html.append("""
-                <div style="layout-mode: center;">
-                    <div style="layout-mode: top; flex-weight: 0.2; anchor-left: 0;">
+                <div style="layout-mode: center; flex-weight: 1;">
+                    <div style="layout-mode: top; flex-weight: 0.2; anchor-min-width: 150; anchor-max-width: 150; anchor-left: 0;">
             """);
             
             for (int j = 0; j < pagesTitles.size(); j++) {
-                html.append("<button id=\"Button"+j+"\" style=\"anchor-horizontal: 1; padding-left: 0; padding-right: 0;\">" + pagesTitles.get(j).split(" ")[0] + "</button>");
+                html.append("<button id=\"Button"+j+"\" style=\"anchor-horizontal: 1;\">" + pagesTitles.get(j).split(" ")[0] + "</button>");
             }
 
             html.append("""
                     </div>
-                    <div style="layout-mode: top; flex-weight: 0.8; anchor-left: 0; anchor-top: 0;">
-                        <div style="layout-mode: top; flex-weight: 1; anchor-left: 4; anchor-top: 0;">
+                    <div style="layout-mode: top; flex-weight: 1;">
+                        <div style="layout-mode: top; flex-weight: 1;">
             """);
 
             for (int k = 0; k < pageParagraphs.size(); k++) {
@@ -101,7 +101,7 @@ public class WelcomeWindowV2Event {
   
             html.append("""
                             </div>
-                        <div style="layout-mode: center;">
+                        <div style="layout-mode: center; flex-weight: 0; anchor-bottom: 0;">
             """);
 
             if (!isFirstPage) {
