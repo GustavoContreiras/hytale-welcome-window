@@ -6,6 +6,7 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;
 import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
+import com.hypixel.hytale.protocol.packets.interface_.Page;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
@@ -23,6 +24,11 @@ public class WelcomeWindowEvent {
     public static void onPlayerReady(PlayerReadyEvent event) {
         Player player = event.getPlayer();
         player.sendMessage(Message.raw("[WelcomeWindow] start"));
+
+        WelcomeWindowEvent.openWelcomeWindow(player);
+    }
+
+    public static void openWelcomeWindow(Player player) {
 
         Ref<EntityStore> ref = player.getReference();
 
@@ -46,7 +52,7 @@ public class WelcomeWindowEvent {
         }
 
         // Build pages from config
-        List<PageBuilder> pages = buildPagesFromConfig(config, playerRef, store);
+        List<PageBuilder> pages = buildPagesFromConfig(config, player, playerRef, store);
 
         if (pages.isEmpty()) {
             player.sendMessage(Message.raw("[WelcomeWindow] Failed to build pages."));
@@ -57,52 +63,86 @@ public class WelcomeWindowEvent {
         pages.get(0).open(playerRef, store);
     }
 
-    private static List<PageBuilder> buildPagesFromConfig(WelcomeConfig config, PlayerRef playerRef, Store<EntityStore> store) {
+    private static List<PageBuilder> buildPagesFromConfig(WelcomeConfig config, Player player, PlayerRef playerRef, Store<EntityStore> store) {
         List<PageBuilder> pages = new ArrayList<>();
         List<PageConfig> pageConfigs = config.getPages();
-        String backButtonText = config.getBackButtonText() != null ? config.getBackButtonText() : "Voltar";
-        String nextButtonText = config.getNextButtonText() != null ? config.getNextButtonText() : "Próximo";
+        String backButtonText = config.getBackButtonText() != null ? config.getBackButtonText() : "Back";
+        String nextButtonText = config.getNextButtonText() != null ? config.getNextButtonText() : "Next";
+        String doneButtonText = config.getDoneButtonText() != null ? config.getDoneButtonText() : "Done";
+        int menuWidth = config.getMenuWidth() != null ? config.getMenuWidth() : 150;
+        int containerWidth = config.getContainerWidth() != null ? config.getContainerWidth() : 800;
+        int containerHeight = config.getContainerHeight() != null ? config.getContainerHeight() : 500;
+        int fontSize = config.getFontSize() != null ? config.getFontSize() : 20;
+
+        List<String> pagesTitles = new ArrayList<>();
+
+        pageConfigs.forEach(pageConfig -> pagesTitles.add(pageConfig.getTitle()));
 
         // Build all pages
         for (int i = 0; i < pageConfigs.size(); i++) {
             PageConfig pageConfig = pageConfigs.get(i);
+            String currentPageTitle = pageConfig.getTitle();
+            List<String> pageParagraphs = pageConfig.getParagraphs();
             boolean isFirstPage = (i == 0);
             boolean isLastPage = (i == pageConfigs.size() - 1);
 
             // Build HTML content
             StringBuilder html = new StringBuilder();
             html.append("<div class=\"page-overlay\">\n");
-            html.append("    <div class=\"container\" data-hyui-title=\"").append(escapeHtml(pageConfig.getTitle())).append("\">\n");
-            html.append("        <div style=\"layout-mode: top; flex-weight:1;\">\n");
+            html.append("<div class=\"container\" data-hyui-title=\"" + currentPageTitle + "\"  style=\"anchor-width: " + containerWidth + "; anchor-height: " + containerHeight + ";\">\n");
+            html.append("<div style=\"layout-mode: center; flex-weight: 1;\">");
+            html.append("<div style=\"layout-mode: topscrolling; flex-weight: 0.2; anchor-min-width: " + menuWidth + "; anchor-max-width: " + menuWidth + "; anchor-left: 0;\">");
             
-            // Add paragraphs
-            if (pageConfig.getParagraphs() != null) {
-                for (String paragraph : pageConfig.getParagraphs()) {
-                    html.append("            <p>").append(escapeHtml(paragraph)).append("</p>\n");
+            for (int j = 0; j < pagesTitles.size(); j++) {
+                String pageTitle = pagesTitles.get(j);
+                String buttonText = pageTitle.split(" ")[0];
+                if (currentPageTitle == pageTitle) {
+                    html.append("<button id=\"Button"+j+"\" style=\"anchor-horizontal: 1; anchor-top: 4;\">" + buttonText + "</button>");
+                } else {
+                    html.append("<button id=\"Button"+j+"\" style=\"anchor-horizontal: 1; anchor-top: 4;\">" + buttonText + "</button>");
                 }
             }
-            
-            html.append("        </div>\n");
-            html.append("        <div style=\"layout-mode: center;\">\n");
-            
-            // Add buttons based on page position
+
+            html.append("""
+                    </div>
+                    <div style="layout-mode: top; flex-weight: 1; anchor-left: 8;">
+                        <div style="layout-mode: top; flex-weight: 1;">
+            """);
+
+            for (int k = 0; k < pageParagraphs.size(); k++) {
+                html.append("<p style=\"font-size: " + fontSize + ";\">" + pageParagraphs.get(k) + "</p>");
+            }
+  
+            html.append("""
+                            </div>
+                        <div style="layout-mode: center; flex-weight: 0; anchor-bottom: 0;">
+            """);
+
             if (!isFirstPage) {
-                html.append("            <button id=\"backBtn").append(i).append("\" style=\"anchor-horizontal:1; padding-right: 4;\">")
-                    .append(escapeHtml(backButtonText)).append("</button>\n");
+                html.append("<button id=\"backBtn"+i+"\" style=\"anchor-horizontal:1; padding-right: 4;\">" + backButtonText + "</button>\n");
             }
+
             if (!isLastPage) {
-                html.append("            <button id=\"nextBtn").append(i).append("\" style=\"anchor-horizontal:1")
-                    .append(isFirstPage ? "" : "; padding-left: 4").append("\">")
-                    .append(escapeHtml(nextButtonText)).append("</button>\n");
+                html.append("<button id=\"nextBtn"+i+"\" style=\"anchor-horizontal:1;\">" + nextButtonText + "</button>\n");
+            } else {
+                html.append("<button id=\"doneBtn"+i+"\" style=\"anchor-horizontal:1;\">" + doneButtonText + "</button>\n");
+            }
+
+            html.append("""
+                        </div>
+                    </div>
+                </div>
+            """);
+            html.append("    </div>\n");
+
+            if (isLastPage) {
+                html.append("<button id=\"escBtn"+i+"\" class=\"back-button\"></button>\n");
             }
             
-            html.append("        </div>\n");
-            html.append("    </div>\n");
-            html.append("    <button id=\"closeBtn").append(i).append("\" class=\"back-button\"></button>\n");
             html.append("</div>");
 
             // Create page with appropriate lifetime
-            CustomPageLifetime lifetime = isLastPage 
+            CustomPageLifetime lifetime = isLastPage
                 ? CustomPageLifetime.CanDismissOrCloseThroughInteraction
                 : CustomPageLifetime.CantClose;
             
@@ -116,6 +156,16 @@ public class WelcomeWindowEvent {
         // Set up navigation between pages
         for (int i = 0; i < pages.size(); i++) {
             PageBuilder currentPage = pages.get(i);
+
+            for (int j = 0; j < pages.size(); j++) {
+                // Setup pages menu buttons
+                PageBuilder page = pages.get(j);
+                currentPage.getById("Button" + j, ButtonBuilder.class).ifPresent(button -> {
+                    button.addEventListener(CustomUIEventBindingType.Activating, clickEvent -> {
+                        page.open(playerRef, store);
+                    });
+                });
+            }
 
             // Set up next button
             if (i < pages.size() - 1) {
@@ -136,20 +186,17 @@ public class WelcomeWindowEvent {
                     });
                 });
             }
+
+            // Set up done button
+            if (i == pages.size() - 1) {
+                currentPage.getById("doneBtn" + i, ButtonBuilder.class).ifPresent(button -> {
+                    button.addEventListener(CustomUIEventBindingType.Activating, clickEvent -> {
+                        player.getPageManager().setPage(player.getReference(), store, Page.None);
+                    });
+                });
+            }
         }
 
         return pages;
     }
-
-    private static String escapeHtml(String text) {
-        if (text == null) {
-            return "";
-        }
-        return text.replace("&", "&amp;")
-                   .replace("<", "&lt;")
-                   .replace(">", "&gt;")
-                   .replace("\"", "&quot;")
-                   .replace("'", "&#39;");
-    }
-
 }

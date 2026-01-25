@@ -1,6 +1,6 @@
 package dev.hytalemodding.commands;
 
-import dev.hytalemodding.events.WelcomeWindowV2Event;
+import dev.hytalemodding.events.WelcomeWindowEvent;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.GameMode;
@@ -40,7 +40,7 @@ public class WelcomeWindowCommand extends AbstractAsyncCommand {
 
 
         return CompletableFuture.runAsync(() -> {
-            WelcomeWindowV2Event.openWelcomeWindow(player);
+            WelcomeWindowEvent.openWelcomeWindow(player);
         }, world);
     }
 }
