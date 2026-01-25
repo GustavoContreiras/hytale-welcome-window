@@ -16,7 +16,7 @@ public class WelcomeWindowPlugin extends JavaPlugin {
 
     @Override
     protected void setup() {
-        this.getCommandRegistry().registerCommand(new WelcomeWindowCommand("welcomewindow", "Opens the welcome window"));
+        this.getCommandRegistry().registerCommand(new WelcomeWindowCommand("welcome", "Opens the welcome window"));
         this.getEventRegistry().registerGlobal(PlayerReadyEvent.class, WelcomeWindowEvent::onPlayerReady);
     }
 }

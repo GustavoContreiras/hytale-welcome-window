@@ -112,15 +112,16 @@ public class ConfigLoader {
         page1.setButtonTitle("Welcome");
         page1.setParagraphs(List.of(
             "Here are some available commands:",
+            "",
             "/help - shows all available commands",
-            "/welcomewindow - shows this welcome window"
+            "/welcome - shows this welcome window"
         ));
         
         PageConfig page2 = new PageConfig();
         page2.setTitle("Dying");
         page2.setButtonTitle("Dying");
         page2.setParagraphs(List.of(
-            "When you're killed you loose part of your equipments."
+            "When you are killed you loose part of your equipments."
         ));
         
         defaultConfig.setPages(List.of(page1, page2));

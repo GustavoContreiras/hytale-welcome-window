@@ -74,9 +74,9 @@ public class WelcomeWindowEvent {
         int containerHeight = config.getContainerHeight() != null ? config.getContainerHeight() : 500;
         int fontSize = config.getFontSize() != null ? config.getFontSize() : 20;
 
-        List<String> pagesTitles = new ArrayList<>();
+        List<String> pagesButtonTitles = new ArrayList<>();
 
-        pageConfigs.forEach(pageConfig -> pagesTitles.add(pageConfig.getTitle()));
+        pageConfigs.forEach(pageConfig -> pagesButtonTitles.add(pageConfig.getButtonTitle()));
 
         // Build all pages
         for (int i = 0; i < pageConfigs.size(); i++) {
@@ -90,27 +90,22 @@ public class WelcomeWindowEvent {
             StringBuilder html = new StringBuilder();
             html.append("<div class=\"page-overlay\">\n");
             html.append("<div class=\"container\" data-hyui-title=\"" + currentPageTitle + "\"  style=\"anchor-width: " + containerWidth + "; anchor-height: " + containerHeight + ";\">\n");
-            html.append("<div style=\"layout-mode: center; flex-weight: 1;\">");
-            html.append("<div style=\"layout-mode: topscrolling; flex-weight: 0.2; anchor-min-width: " + menuWidth + "; anchor-max-width: " + menuWidth + "; anchor-left: 0;\">");
+            html.append("<div style=\"layout-mode: center; flex-weight: 1;\">\n");
+            html.append("<div style=\"layout-mode: topscrolling; anchor-min-width: " + menuWidth + "; anchor-max-width: " + menuWidth + "; anchor-left: 0;\">\n");
             
-            for (int j = 0; j < pagesTitles.size(); j++) {
-                String pageTitle = pagesTitles.get(j);
-                String buttonText = pageTitle.split(" ")[0];
-                if (currentPageTitle == pageTitle) {
-                    html.append("<button id=\"Button"+j+"\" style=\"anchor-horizontal: 1; anchor-top: 4;\">" + buttonText + "</button>");
-                } else {
-                    html.append("<button id=\"Button"+j+"\" style=\"anchor-horizontal: 1; anchor-top: 4;\">" + buttonText + "</button>");
-                }
+            for (int j = 0; j < pagesButtonTitles.size(); j++) {
+                String pageButtonTitle = pagesButtonTitles.get(j);
+                html.append("<button id=\"Button"+j+"\" style=\"anchor-horizontal: 1; anchor-top: 4;\">" + pageButtonTitle + "</button>\n");
             }
 
             html.append("""
                     </div>
-                    <div style="layout-mode: top; flex-weight: 1; anchor-left: 8;">
-                        <div style="layout-mode: top; flex-weight: 1;">
+                    <div style="layout-mode: top; flex-weight: 1;">
+                        <div style="layout-mode: topscrolling; flex-weight: 1; padding: 0;">
             """);
 
             for (int k = 0; k < pageParagraphs.size(); k++) {
-                html.append("<p style=\"font-size: " + fontSize + ";\">" + pageParagraphs.get(k) + "</p>");
+                html.append("<p style=\"font-size: " + fontSize + ";\">" + pageParagraphs.get(k) + "</p>\n");
             }
   
             html.append("""
@@ -145,6 +140,8 @@ public class WelcomeWindowEvent {
             CustomPageLifetime lifetime = isLastPage
                 ? CustomPageLifetime.CanDismissOrCloseThroughInteraction
                 : CustomPageLifetime.CantClose;
+
+            // System.out.println(html.toString());
             
             PageBuilder page = PageBuilder.detachedPage()
                 .withLifetime(lifetime)
