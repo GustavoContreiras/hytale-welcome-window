@@ -1,6 +1,6 @@
 {
   "Group": "dev.hytalemodding",
-  "Name": "WelcomeWindow2",
+  "Name": "WelcomeWindow",
   "Version": "${version}",
   "Description": "Welcome window displayed when player logs in.",
   "Authors": [

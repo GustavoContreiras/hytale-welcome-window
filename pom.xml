@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>dev.hytalemodding</groupId>
-    <artifactId>WelcomeWindow2</artifactId>
+    <artifactId>WelcomeWindow</artifactId>
     <version>1.0</version>
 
     <properties>
