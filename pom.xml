@@ -30,6 +30,12 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/HyUI-0.5.2-all.jar</systemPath>
         </dependency>
+        <!-- Gson for JSON parsing -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+        </dependency>
     </dependencies>
 
     <build>
