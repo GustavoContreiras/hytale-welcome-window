@@ -5,6 +5,11 @@ import java.util.List;
 public class WelcomeConfig {
     private String backButtonText;
     private String nextButtonText;
+    private String doneButtonText;
+    private Integer menuWidth;
+    private Integer containerWidth;
+    private Integer containerHeight;
+    private Integer fontSize;
     private List<PageConfig> pages;
 
     public WelcomeConfig() {
@@ -30,6 +35,46 @@ public class WelcomeConfig {
 
     public void setNextButtonText(String nextButtonText) {
         this.nextButtonText = nextButtonText;
+    }
+
+    public String getDoneButtonText() {
+        return doneButtonText;
+    }
+
+    public void setDoneButtonText(String nextButtonText) {
+        this.doneButtonText = nextButtonText;
+    }
+
+    public Integer getMenuWidth() {
+        return menuWidth;
+    }
+
+    public void setMenuWidth(Integer menuWidth) {
+        this.menuWidth = menuWidth;
+    }
+
+    public Integer getContainerWidth() {
+        return containerWidth;
+    }
+
+    public void setContainerWidth(Integer containerWidth) {
+        this.containerWidth = containerWidth;
+    }
+
+    public Integer getContainerHeight() {
+        return containerHeight;
+    }
+
+    public void setContainerHeight(Integer containerHeight) {
+        this.containerHeight = containerHeight;
+    }
+
+    public Integer getFontSize() {
+        return fontSize;
+    }
+
+    public void setFontSize(Integer fontSize) {
+        this.fontSize = fontSize;
     }
 
     public List<PageConfig> getPages() {

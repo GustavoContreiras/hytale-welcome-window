@@ -4,16 +4,15 @@ import java.util.List;
 
 public class PageConfig {
     private String title;
+    private String buttonTitle;
     private List<String> paragraphs;
-    private boolean allowDismiss;
 
     public PageConfig() {
     }
 
-    public PageConfig(String title, List<String> paragraphs, boolean allowDismiss) {
+    public PageConfig(String title, List<String> paragraphs) {
         this.title = title;
         this.paragraphs = paragraphs;
-        this.allowDismiss = allowDismiss;
     }
 
     public String getTitle() {
@@ -24,19 +23,19 @@ public class PageConfig {
         this.title = title;
     }
 
+    public String getButtonTitle() {
+        return buttonTitle;
+    }
+
+    public void setButtonTitle(String buttonTitle) {
+        this.buttonTitle = buttonTitle;
+    }
+
     public List<String> getParagraphs() {
         return paragraphs;
     }
 
     public void setParagraphs(List<String> paragraphs) {
         this.paragraphs = paragraphs;
-    }
-
-    public boolean isAllowDismiss() {
-        return allowDismiss;
-    }
-
-    public void setAllowDismiss(boolean allowDismiss) {
-        this.allowDismiss = allowDismiss;
     }
 }

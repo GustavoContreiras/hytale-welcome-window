@@ -102,7 +102,7 @@ public class WelcomeWindowEvent {
             html.append("</div>");
 
             // Create page with appropriate lifetime
-            CustomPageLifetime lifetime = pageConfig.isAllowDismiss() 
+            CustomPageLifetime lifetime = isLastPage 
                 ? CustomPageLifetime.CanDismissOrCloseThroughInteraction
                 : CustomPageLifetime.CantClose;
             

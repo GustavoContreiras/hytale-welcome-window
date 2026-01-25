@@ -101,22 +101,27 @@ public class ConfigLoader {
         WelcomeConfig defaultConfig = new WelcomeConfig();
         defaultConfig.setBackButtonText("Back");
         defaultConfig.setNextButtonText("Next");
+        defaultConfig.setDoneButtonText("Finish");
+        defaultConfig.setMenuWidth(150);
+        defaultConfig.setContainerWidth(800);
+        defaultConfig.setContainerHeight(500);
+        defaultConfig.setFontSize(18);
         
         PageConfig page1 = new PageConfig();
         page1.setTitle("Welcome");
+        page1.setButtonTitle("Welcome");
         page1.setParagraphs(List.of(
             "Here are some available commands:",
             "/help - shows all available commands",
-            "/welcome - shows this welcome window"
+            "/welcomewindow - shows this welcome window"
         ));
-        page1.setAllowDismiss(false);
         
         PageConfig page2 = new PageConfig();
         page2.setTitle("Dying");
+        page2.setButtonTitle("Dying");
         page2.setParagraphs(List.of(
             "When you're killed you loose part of your equipments."
         ));
-        page2.setAllowDismiss(true);
         
         defaultConfig.setPages(List.of(page1, page2));
         return defaultConfig;
