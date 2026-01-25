@@ -40,15 +40,15 @@ public class WelcomeWindowEvent {
             .fromHtml("""
                 <div class="page-overlay">
                     <div class="container" data-hyui-title="Bem-vindo ao HyTibia I">
-                        <div class="container-contents">
+                        <div style="layout-mode: top; flex-weight:1;">
                             <p>Aqui estão alguns comandos disponíveis:</p>
                             <p>/help - exibe todos comandos disponíveis</p>
                             <p>/modlist - exibe todos mods instalados</p>
                             <p>/lvl gui - painel para atribuir pontos de level</p>
                             <p>/hidearmor - esconda seus equipamentos na sua skin</p>
                         </div>
-                        <div class="container-contents">
-                            <button id="nextBtn">Próximo</button>
+                        <div style="layout-mode: center;">
+                            <button id="nextBtn" style="anchor-horizontal:1;">Próximo</button>
                         </div>
                     </div>
                 </div>
@@ -59,12 +59,12 @@ public class WelcomeWindowEvent {
             .fromHtml("""
                 <div class="page-overlay">
                     <div class="container" data-hyui-title="Level">
-                        <div class="container-contents">
+                        <div style="layout-mode: top; flex-weight:1;">
                             <p>Ao matar criaturas, você ganha experiência.</p>
                         </div>
-                        <div style="layout-mode: center">
-                            <button id="backBtn">Voltar</button>
-                            <button id="nextBtn">Próximo</button>
+                        <div style="layout-mode: center;">
+                            <button id="backBtn" style="anchor-horizontal:1; padding-right: 4;">Voltar</button>
+                            <button id="nextBtn" style="anchor-horizontal:1; padding-left: 4;">Próximo</button>
                         </div>
                     </div>
                     <button id="closeBtn" class="back-button"></button>

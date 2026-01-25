@@ -34,8 +34,9 @@ public class UIExampleCommand extends AbstractAsyncCommand {
 
     private final PageBuilder page;
 
-    public UIExampleCommand() {
-        super("ui", "Opens an example UI window");
+    public UIExampleCommand(String name, String description) {
+        super(name, description);
+
         this.setPermissionGroup(GameMode.Adventure); // Anyone can use this command
 
         // Pre-build the UI using HYUIML (HTML-like syntax)
@@ -43,16 +44,16 @@ public class UIExampleCommand extends AbstractAsyncCommand {
         page = PageBuilder.detachedPage()
                 .withLifetime(CustomPageLifetime.CanDismiss)
                 .fromHtml("""
-                        <div class="page-overlay">
-                            <div class="container" data-hyui-title="Example Menu">
-                                <div class="container-contents">
-                                    <p>Welcome to the UI!</p>
-                                    <button id="greetBtn">Say Hello</button>
-                                    <button id="closeBtn">Close</button>
-                                </div>
+                    <div class="page-overlay">
+                        <div class="container" data-hyui-title="Example Menu">
+                            <div class="container-contents">
+                                <p>Welcome to the UI!</p>
+                                <button id="greetBtn">Say Hello</button>
+                                <button id="closeBtn">Close</button>
                             </div>
                         </div>
-                        """);
+                    </div>
+                """);
     }
 
     @NonNullDecl

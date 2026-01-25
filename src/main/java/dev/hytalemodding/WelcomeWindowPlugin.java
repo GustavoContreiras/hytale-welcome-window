@@ -18,7 +18,7 @@ public class WelcomeWindowPlugin extends JavaPlugin {
     @Override
     protected void setup() {
         this.getCommandRegistry().registerCommand(new ExampleCommand("example", "An example command"));
-        this.getCommandRegistry().registerCommand(new UIExampleCommand()); // HyUI example: /ui
+        this.getCommandRegistry().registerCommand(new UIExampleCommand("ui", "Opens an example UI window"));
         this.getEventRegistry().registerGlobal(PlayerReadyEvent.class, WelcomeWindowEvent::onPlayerReady);
     }
 }
