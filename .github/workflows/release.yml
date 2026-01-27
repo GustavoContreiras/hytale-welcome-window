@@ -103,7 +103,7 @@ jobs:
           
           # Upload to CurseForge
           # Note: Hytale mods use the 'hytale' game endpoint
-          RESPONSE=$(curl -X POST \
+          RESPONSE=$(curl -L -X POST \
             -H "X-Api-Token: $CURSEFORGE_API_TOKEN" \
             -F "metadata=$METADATA" \
             -F "file=@$JAR_FILE" \
