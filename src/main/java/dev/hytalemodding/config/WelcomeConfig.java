@@ -11,6 +11,7 @@ public class WelcomeConfig {
     private Integer containerHeight;
     private Integer fontSize;
     private Boolean alwaysShow;
+    private Boolean debug;
     private List<PageConfig> pages;
 
     public WelcomeConfig() {
@@ -84,6 +85,14 @@ public class WelcomeConfig {
 
     public void setAlwaysShow(Boolean alwaysShow) {
         this.alwaysShow = alwaysShow;
+    }
+
+    public Boolean getDebug() {
+        return debug;
+    }
+
+    public void setDebug(Boolean debug) {
+        this.debug = debug;
     }
 
     public List<PageConfig> getPages() {

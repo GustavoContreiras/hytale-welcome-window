@@ -1,0 +1,133 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Semantic Release & CurseForge Upload
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '25'
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Install dependencies
+        run: |
+          apt update
+          apt install -y curl jq
+          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+          && chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+          && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+          && apt update \
+          && apt install gh -y
+
+      - name: Install semantic-release and plugins
+        run: |
+          npm install -g semantic-release @semantic-release/changelog @semantic-release/exec @semantic-release/git @semantic-release/github
+
+      - name: Run semantic-release
+        id: semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npx semantic-release 2>&1 | tee semantic-release.log
+        continue-on-error: true
+
+      - name: Extract version from semantic-release
+        id: extract-version
+        if: steps.semantic-release.outcome == 'success'
+        run: |
+          # Get the latest git tag created by semantic-release
+          VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -z "$VERSION" ]; then
+            # Fallback: try to extract from semantic-release log
+            VERSION=$(grep -oP 'Published release \K[0-9]+\.[0-9]+\.[0-9]+' semantic-release.log 2>/dev/null || echo "")
+          fi
+          if [ -z "$VERSION" ]; then
+            # Last fallback: get from pom.xml
+            VERSION=$(grep -oP '<version>\K[0-9]+\.[0-9]+\.[0-9]+' pom.xml | head -n 1)
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Extracted version: $VERSION"
+
+      - name: Build JAR
+        if: steps.extract-version.outputs.version != ''
+        run: |
+          mvn clean package -DskipTests
+
+      - name: Upload JAR to CurseForge
+        if: steps.extract-version.outputs.version != ''
+        env:
+          CURSEFORGE_API_TOKEN: ${{ secrets.CURSEFORGE_API_TOKEN }}
+          CURSEFORGE_PROJECT_ID: ${{ secrets.CURSEFORGE_PROJECT_ID }}
+          VERSION: ${{ steps.extract-version.outputs.version }}
+        run: |
+          JAR_FILE=$(find target -name "*.jar" -not -name "*-sources.jar" -not -name "*-javadoc.jar" | head -n 1)
+          
+          if [ -z "$JAR_FILE" ]; then
+            echo "Error: JAR file not found in target directory"
+            exit 1
+          fi
+          
+          echo "Found JAR: $JAR_FILE"
+          
+          # Get release notes from the latest release
+          RELEASE_NOTES=$(gh release view "v$VERSION" --json body --jq '.body' 2>/dev/null || \
+            gh release view "$VERSION" --json body --jq '.body' 2>/dev/null || \
+            echo "Release $VERSION")
+          
+          # Create metadata JSON
+          METADATA=$(jq -n \
+            --arg changelog "$RELEASE_NOTES" \
+            --arg releaseType "release" \
+            --arg gameVersions "[]" \
+            '{changelog: $changelog, changelogType: "markdown", displayName: "WelcomeWindow '$VERSION'", releaseType: $releaseType, gameVersions: ($gameVersions | fromjson)}')
+          
+          # Upload to CurseForge
+          # Note: Hytale mods use the 'hytale' game endpoint
+          RESPONSE=$(curl -X POST \
+            -H "X-Api-Token: $CURSEFORGE_API_TOKEN" \
+            -F "metadata=$METADATA" \
+            -F "file=@$JAR_FILE" \
+            "https://hytale.curseforge.com/api/projects/$CURSEFORGE_PROJECT_ID/upload-file" \
+            -w "\n%{http_code}")
+          
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n 1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+          
+          if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ]; then
+            echo "Successfully uploaded to CurseForge"
+            echo "$BODY" | jq '.'
+          else
+            echo "Error uploading to CurseForge. HTTP Code: $HTTP_CODE"
+            echo "Response: $BODY"
+            exit 1
+          fi

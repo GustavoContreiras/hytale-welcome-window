@@ -26,9 +26,9 @@
         <dependency>
             <groupId>au.ellie</groupId>
             <artifactId>HyUI</artifactId>
-            <version>0.5.2</version>
+            <version>0.5.5</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/HyUI-0.5.2-all.jar</systemPath>
+            <systemPath>${project.basedir}/lib/HyUI-0.5.5-all.jar</systemPath>
         </dependency>
         <!-- Gson for JSON parsing -->
         <dependency>
@@ -50,27 +50,49 @@
         </resources>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <target>
-                                <copy
-                                    file="${project.build.directory}/${project.build.finalName}.jar"
-                                    todir="C:/dev/hytale/hytale-server/Server/mods"
-                                    overwrite="true"
-                                />
-                            </target>
-                        </configuration>
-                    </execution>
-                </executions>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.16.2</version>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <!-- Profile for local development - copies JAR to server mods folder -->
+        <!-- Automatically disabled in CI environments (GitHub Actions sets CI=true) -->
+        <profile>
+            <id>local-deploy</id>
+            <activation>
+                <property>
+                    <name>!env.CI</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <copy
+                                            file="${project.build.directory}/${project.build.finalName}.jar"
+                                            todir="C:/dev/hytale/hytale-server/Server/mods"
+                                            overwrite="true"
+                                        />
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

@@ -1,6 +1,7 @@
 package dev.hytalemodding.events;
 
 import au.ellie.hyui.builders.ButtonBuilder;
+import au.ellie.hyui.builders.HudBuilder;
 import au.ellie.hyui.builders.PageBuilder;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -23,7 +24,10 @@ public class WelcomeWindowEvent {
 
     public static void onPlayerReady(PlayerReadyEvent event) {
         Player player = event.getPlayer();
-        player.sendMessage(Message.raw("[WelcomeWindow] start"));
+        // player.sendMessage(Message.raw("[WelcomeWindow] start"));
+
+        // Show HUD question mark button
+        // WelcomeWindowEvent.showHudButton(player);
 
         // Load configuration to check alwaysShow setting
         WelcomeConfig config = ConfigLoader.loadConfig(player);
@@ -203,4 +207,34 @@ public class WelcomeWindowEvent {
 
         return pages;
     }
+
+    // public static void showHudButton(Player player) {
+    //     Ref<EntityStore> ref = player.getReference();
+
+    //     if (ref == null) {
+    //         return;
+    //     }
+
+    //     Store<EntityStore> store = ref.getStore();
+    //     PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
+
+    //     if (playerRef == null) {
+    //         return;
+    //     }
+
+    //     // Create HUD button in top right corner
+    //     String hudHtml = """
+    //         <div style="anchor-top: 10; anchor-horizontal: 1; padding-right: 10;">
+    //             <button id="helpBtn" style="font-size: 24; padding: 8; min-width: 32; min-height: 32;">?</button>
+    //         </div>
+    //         """;
+
+    //     // Create HUD with click event listener to open WelcomeWindow
+    //     HudBuilder.hudForPlayer(playerRef)
+    //         .fromHtml(hudHtml)
+    //         .addEventListener("helpBtn", CustomUIEventBindingType.Activating, ctx -> {
+    //             WelcomeWindowEvent.openWelcomeWindow(player);
+    //         })
+    //         .show(store);
+    // }
 }
