@@ -19,7 +19,8 @@
             <groupId>com.hypixel.hytale</groupId>
             <artifactId>HytaleServer-parent</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>provided</scope>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/HytaleServer.jar</systemPath>
         </dependency>
         <!-- HyUI library for building UIs with HYUIML (HTML-like syntax) -->
         <!-- See docs/HyUI - Hytale Mods - CurseForge.html for documentation -->
