@@ -77,7 +77,7 @@ jobs:
         if: steps.extract-version.outputs.version != ''
         env:
           CURSEFORGE_API_TOKEN: ${{ secrets.CURSEFORGE_API_TOKEN }}
-          CURSEFORGE_PROJECT_ID: ${{ secrets.CURSEFORGE_PROJECT_ID }}
+          CURSEFORGE_PROJECT_ID: ${{ vars.CURSEFORGE_PROJECT_ID }}
           VERSION: ${{ steps.extract-version.outputs.version }}
         run: |
           JAR_FILE=$(find target -name "*.jar" -not -name "*-sources.jar" -not -name "*-javadoc.jar" | head -n 1)
@@ -88,26 +88,35 @@ jobs:
           fi
           
           echo "Found JAR: $JAR_FILE"
-          
+
+          # Strip 'v' prefix from version if present
+          CLEAN_VERSION="${VERSION#v}"
+          echo "Version: $CLEAN_VERSION"
+          echo "Project ID: $CURSEFORGE_PROJECT_ID"
+
           # Get release notes from the latest release
-          RELEASE_NOTES=$(gh release view "v$VERSION" --json body --jq '.body' 2>/dev/null || \
-            gh release view "$VERSION" --json body --jq '.body' 2>/dev/null || \
-            echo "Release $VERSION")
-          
+          RELEASE_NOTES=$(gh release view "v$CLEAN_VERSION" --json body --jq '.body' 2>/dev/null || \
+            gh release view "$CLEAN_VERSION" --json body --jq '.body' 2>/dev/null || \
+            echo "Release $CLEAN_VERSION")
+
           # Create metadata JSON
+          # Note: gameVersions may need actual version IDs from CurseForge API
           METADATA=$(jq -n \
             --arg changelog "$RELEASE_NOTES" \
-            --arg releaseType "release" \
-            --arg gameVersions "[]" \
-            '{changelog: $changelog, changelogType: "markdown", displayName: "WelcomeWindow '$VERSION'", releaseType: $releaseType, gameVersions: ($gameVersions | fromjson)}')
-          
+            --arg displayName "WelcomeWindow $CLEAN_VERSION" \
+            '{changelog: $changelog, changelogType: "markdown", displayName: $displayName, releaseType: "release"}')
+
+          echo "Metadata: $METADATA"
+
           # Upload to CurseForge
-          # Note: Hytale mods use the 'hytale' game endpoint
+          UPLOAD_URL="https://hytale.curseforge.com/api/projects/${CURSEFORGE_PROJECT_ID}/upload-file"
+          echo "Upload URL: $UPLOAD_URL"
+
           RESPONSE=$(curl -L -X POST \
             -H "X-Api-Token: $CURSEFORGE_API_TOKEN" \
             -F "metadata=$METADATA" \
             -F "file=@$JAR_FILE" \
-            "https://hytale.curseforge.com/api/projects/$CURSEFORGE_PROJECT_ID/upload-file" \
+            "$UPLOAD_URL" \
             -w "\n%{http_code}")
           
           HTTP_CODE=$(echo "$RESPONSE" | tail -n 1)
