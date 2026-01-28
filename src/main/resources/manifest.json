@@ -1,5 +1,5 @@
 {
-  "Group": "dev.hytalemodding",
+  "Group": "gustavocontreiras",
   "Name": "WelcomeWindow",
   "Version": "${version}",
   "Description": "Welcome window displayed when player logs in.",
@@ -16,5 +16,5 @@
   "OptionalDependencies": {},
   "DisabledByDefault": false,
   "IncludesAssetPack": false,
-  "Main": "dev.hytalemodding.WelcomeWindowPlugin"
+  "Main": "gustavocontreiras.WelcomeWindowPlugin"
 }

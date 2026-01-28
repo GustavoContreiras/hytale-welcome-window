@@ -41,3 +41,6 @@ build/
 ### Node.js ###
 node_modules/
 package-lock.json
+
+### Extracted library classes ###
+lib/au/

@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:support.curseforge.com)"
+      "WebFetch(domain:support.curseforge.com)",
+      "Bash(mvn clean package:*)",
+      "Bash(jar tf:*)",
+      "Bash(find:*)",
+      "Bash(mvn package:*)"
     ]
   }
 }

@@ -1,6 +1,6 @@
-package dev.hytalemodding.commands;
+package gustavocontreiras.commands;
 
-import dev.hytalemodding.events.WelcomeWindowEvent;
+import gustavocontreiras.events.WelcomeWindowEvent;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.GameMode;

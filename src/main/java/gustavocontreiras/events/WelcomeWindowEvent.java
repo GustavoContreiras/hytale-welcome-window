@@ -1,4 +1,4 @@
-package dev.hytalemodding.events;
+package gustavocontreiras.events;
 
 import au.ellie.hyui.builders.ButtonBuilder;
 import au.ellie.hyui.builders.HudBuilder;
@@ -13,9 +13,9 @@ import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import dev.hytalemodding.config.ConfigLoader;
-import dev.hytalemodding.config.PageConfig;
-import dev.hytalemodding.config.WelcomeConfig;
+import gustavocontreiras.WelcomeWindowPlugin;
+import gustavocontreiras.config.PageConfig;
+import gustavocontreiras.config.WelcomeConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +30,8 @@ public class WelcomeWindowEvent {
         // WelcomeWindowEvent.showHudButton(player);
 
         // Load configuration to check alwaysShow setting
-        WelcomeConfig config = ConfigLoader.loadConfig(player);
-        boolean alwaysShow = config.getAlwaysShow() != null ? config.getAlwaysShow() : true;
+        WelcomeConfig config = WelcomeWindowPlugin.getInstance().getWelcomeConfig().get();
+        boolean alwaysShow = config.getAlwaysShow();
 
         // Show window if alwaysShow is true, or if it's the player's first spawn
         if (alwaysShow || player.isFirstSpawn()) {
@@ -55,7 +55,7 @@ public class WelcomeWindowEvent {
         }
 
         // Load configuration from file
-        WelcomeConfig config = ConfigLoader.loadConfig(player);
+        WelcomeConfig config = WelcomeWindowPlugin.getInstance().getWelcomeConfig().get();
         
         if (config.getPages() == null || config.getPages().isEmpty()) {
             player.sendMessage(Message.raw("[WelcomeWindow] No pages configured. Using default."));
@@ -77,13 +77,13 @@ public class WelcomeWindowEvent {
     private static List<PageBuilder> buildPagesFromConfig(WelcomeConfig config, Player player, PlayerRef playerRef, Store<EntityStore> store) {
         List<PageBuilder> pages = new ArrayList<>();
         List<PageConfig> pageConfigs = config.getPages();
-        String backButtonText = config.getBackButtonText() != null ? config.getBackButtonText() : "Back";
-        String nextButtonText = config.getNextButtonText() != null ? config.getNextButtonText() : "Next";
-        String doneButtonText = config.getDoneButtonText() != null ? config.getDoneButtonText() : "Done";
-        int menuWidth = config.getMenuWidth() != null ? config.getMenuWidth() : 150;
-        int containerWidth = config.getContainerWidth() != null ? config.getContainerWidth() : 800;
-        int containerHeight = config.getContainerHeight() != null ? config.getContainerHeight() : 500;
-        int fontSize = config.getFontSize() != null ? config.getFontSize() : 20;
+        String backButtonText = config.getBackButtonText();
+        String nextButtonText = config.getNextButtonText();
+        String doneButtonText = config.getDoneButtonText();
+        int menuWidth = config.getMenuWidth();
+        int containerWidth = config.getContainerWidth();
+        int containerHeight = config.getContainerHeight();
+        int fontSize = config.getFontSize();
 
         List<String> pagesButtonTitles = new ArrayList<>();
 
@@ -164,11 +164,22 @@ public class WelcomeWindowEvent {
         // Set up navigation between pages
         for (int i = 0; i < pages.size(); i++) {
             PageBuilder currentPage = pages.get(i);
+            final int currentPageIndex = i;
 
             for (int j = 0; j < pages.size(); j++) {
                 // Setup pages menu buttons
+                final int buttonIndex = j;
+                final String buttonText = pagesButtonTitles.get(j);
                 PageBuilder page = pages.get(j);
                 currentPage.getById("Button" + j, ButtonBuilder.class).ifPresent(button -> {
+                    button.editElementAfter((commandBuilder, selector) -> {
+                        commandBuilder.set(selector + ".Text", buttonText);
+                        // Disable the button if it's the current page
+                        if (buttonIndex == currentPageIndex) {
+                            commandBuilder.set(selector + ".Disabled", true);
+                        }
+                    });
+
                     button.addEventListener(CustomUIEventBindingType.Activating, clickEvent -> {
                         page.open(playerRef, store);
                     });
@@ -179,6 +190,9 @@ public class WelcomeWindowEvent {
             if (i < pages.size() - 1) {
                 PageBuilder nextPage = pages.get(i + 1);
                 currentPage.getById("nextBtn" + i, ButtonBuilder.class).ifPresent(button -> {
+                    button.editElementAfter((commandBuilder, selector) -> {
+                        commandBuilder.set(selector + ".Text", nextButtonText);
+                    });
                     button.addEventListener(CustomUIEventBindingType.Activating, clickEvent -> {
                         nextPage.open(playerRef, store);
                     });
@@ -189,6 +203,9 @@ public class WelcomeWindowEvent {
             if (i > 0) {
                 PageBuilder previousPage = pages.get(i - 1);
                 currentPage.getById("backBtn" + i, ButtonBuilder.class).ifPresent(button -> {
+                    button.editElementAfter((commandBuilder, selector) -> {
+                        commandBuilder.set(selector + ".Text", backButtonText);
+                    });
                     button.addEventListener(CustomUIEventBindingType.Activating, clickEvent -> {
                         previousPage.open(playerRef, store);
                     });
@@ -198,6 +215,9 @@ public class WelcomeWindowEvent {
             // Set up done button
             if (i == pages.size() - 1) {
                 currentPage.getById("doneBtn" + i, ButtonBuilder.class).ifPresent(button -> {
+                    button.editElementAfter((commandBuilder, selector) -> {
+                        commandBuilder.set(selector + ".Text", doneButtonText);
+                    });
                     button.addEventListener(CustomUIEventBindingType.Activating, clickEvent -> {
                         player.getPageManager().setPage(player.getReference(), store, Page.None);
                     });
