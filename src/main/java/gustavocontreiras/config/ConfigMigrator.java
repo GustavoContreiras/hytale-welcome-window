@@ -129,12 +129,15 @@ public class ConfigMigrator {
             root.addProperty("BackButtonText", defaults.getBackButtonText());
             root.addProperty("NextButtonText", defaults.getNextButtonText());
             root.addProperty("DoneButtonText", defaults.getDoneButtonText());
+            root.addProperty("PageCounterText", defaults.getPageCounterText());
             root.addProperty("MenuWidth", defaults.getMenuWidth());
             root.addProperty("ContainerWidth", defaults.getContainerWidth());
             root.addProperty("ContainerHeight", defaults.getContainerHeight());
             root.addProperty("FontSize", defaults.getFontSize());
             root.addProperty("AlwaysShow", defaults.getAlwaysShow());
             root.addProperty("Debug", defaults.getDebug());
+            root.addProperty("ShowPageCounter", defaults.getShowPageCounter());
+            root.addProperty("AllowExitOnAnyPage", defaults.getAllowExitOnAnyPage());
 
             // Pages from defaults
             JsonArray pages = new JsonArray();

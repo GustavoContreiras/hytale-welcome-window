@@ -7,7 +7,8 @@
       "Bash(find:*)",
       "Bash(mvn package:*)",
       "Bash(dir:*)",
-      "Bash(findstr:*)"
+      "Bash(findstr:*)",
+      "Bash(jar xf:*)"
     ]
   }
 }
