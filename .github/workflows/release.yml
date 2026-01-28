@@ -103,7 +103,7 @@ jobs:
           # Note: gameVersions may need actual version IDs from CurseForge API
           METADATA=$(jq -n \
             --arg changelog "$RELEASE_NOTES" \
-            --arg displayName "WelcomeWindow $CLEAN_VERSION" \
+            --arg displayName "WelcomeWindow-$CLEAN_VERSION.jar" \
             '{changelog: $changelog, changelogType: "markdown", displayName: $displayName, releaseType: "release"}')
 
           echo "Metadata: $METADATA"
