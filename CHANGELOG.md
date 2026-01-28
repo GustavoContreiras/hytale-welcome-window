@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/GustavoContreiras/hytale-welcome-window/compare/v2.0.0...v2.0.1) (2026-01-28)
+
+
+### Bug Fixes
+
+* add default values ([69cf7c0](https://github.com/GustavoContreiras/hytale-welcome-window/commit/69cf7c0d9193f54eff0b8f41705579a3d9ced9e9))
+
 # [2.0.0](https://github.com/GustavoContreiras/hytale-welcome-window/compare/v1.0.0...v2.0.0) (2026-01-28)
 
 
