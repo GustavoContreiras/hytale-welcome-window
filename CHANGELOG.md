@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/GustavoContreiras/hytale-welcome-window/compare/v1.0.0...v2.0.0) (2026-01-28)
+
+
+### Features
+
+* allow exit on any page; show page counter ([c5dd489](https://github.com/GustavoContreiras/hytale-welcome-window/commit/c5dd489a41794e8a48db0afe9aed459feac42f01))
+
+
+### BREAKING CHANGES
+
+* config.json folder and properties changed
+
 # 1.0.0 (2026-01-27)
 
 
