@@ -84,6 +84,9 @@ public class WelcomeWindowEvent {
         int containerWidth = config.getContainerWidth();
         int containerHeight = config.getContainerHeight();
         int fontSize = config.getFontSize();
+        boolean showPageCounter = config.getShowPageCounter();
+        String pageCounterText = config.getPageCounterText();
+        boolean allowExitOnAnyPage = config.getAllowExitOnAnyPage();
 
         List<String> pagesButtonTitles = new ArrayList<>();
 
@@ -102,11 +105,23 @@ public class WelcomeWindowEvent {
             html.append("<div class=\"page-overlay\">\n");
             html.append("<div class=\"container\" data-hyui-title=\"" + currentPageTitle + "\"  style=\"anchor-width: " + containerWidth + "; anchor-height: " + containerHeight + ";\">\n");
             html.append("<div style=\"layout-mode: center; flex-weight: 1;\">\n");
-            html.append("<div style=\"layout-mode: topscrolling; anchor-min-width: " + menuWidth + "; anchor-max-width: " + menuWidth + "; anchor-left: 0;\">\n");
-            
+            html.append("<div style=\"layout-mode: top; anchor-min-width: " + menuWidth + "; anchor-max-width: " + menuWidth + "; anchor-left: 0;\">\n");
+            html.append("<div style=\"layout-mode: topscrolling; flex-weight: 1;\">\n");
+
             for (int j = 0; j < pagesButtonTitles.size(); j++) {
                 String pageButtonTitle = pagesButtonTitles.get(j);
                 html.append("<button id=\"Button"+j+"\" style=\"anchor-horizontal: 1; anchor-top: 4;\">" + pageButtonTitle + "</button>\n");
+            }
+
+            html.append("</div>\n");
+
+            // Page counter below menu
+            if (showPageCounter) {
+                int currentPageNum = i + 1;
+                int totalPages = pageConfigs.size();
+                html.append("<div style=\"layout-mode: left; anchor-bottom: 0;\">\n");
+                html.append("<p style=\"font-size: " + fontSize + "; color: #a3a3a3;\">" + pageCounterText + " " + currentPageNum + "/" + totalPages + "</p>\n");
+                html.append("</div>\n");
             }
 
             html.append("""
@@ -141,14 +156,14 @@ public class WelcomeWindowEvent {
             """);
             html.append("    </div>\n");
 
-            if (isLastPage) {
+            if (isLastPage || allowExitOnAnyPage) {
                 html.append("<button id=\"escBtn"+i+"\" class=\"back-button\"></button>\n");
             }
-            
+
             html.append("</div>");
 
             // Create page with appropriate lifetime
-            CustomPageLifetime lifetime = isLastPage
+            CustomPageLifetime lifetime = (isLastPage || allowExitOnAnyPage)
                 ? CustomPageLifetime.CanDismissOrCloseThroughInteraction
                 : CustomPageLifetime.CantClose;
 

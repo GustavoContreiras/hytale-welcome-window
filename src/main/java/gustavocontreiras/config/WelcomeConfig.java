@@ -19,6 +19,9 @@ public class WelcomeConfig {
             .append(new KeyedCodec<>("DoneButtonText", Codec.STRING),
                     (config, value) -> config.doneButtonText = value,
                     (config) -> config.doneButtonText).add()
+            .append(new KeyedCodec<>("PageCounterText", Codec.STRING),
+                    (config, value) -> config.pageCounterText = value,
+                    (config) -> config.pageCounterText).add()
             .append(new KeyedCodec<>("MenuWidth", Codec.INTEGER),
                     (config, value) -> config.menuWidth = value,
                     (config) -> config.menuWidth).add()
@@ -37,6 +40,12 @@ public class WelcomeConfig {
             .append(new KeyedCodec<>("Debug", Codec.BOOLEAN),
                     (config, value) -> config.debug = value,
                     (config) -> config.debug).add()
+            .append(new KeyedCodec<>("ShowPageCounter", Codec.BOOLEAN),
+                    (config, value) -> config.showPageCounter = value,
+                    (config) -> config.showPageCounter).add()
+            .append(new KeyedCodec<>("AllowExitOnAnyPage", Codec.BOOLEAN),
+                    (config, value) -> config.allowExitOnAnyPage = value,
+                    (config) -> config.allowExitOnAnyPage).add()
             .append(new KeyedCodec<>("Pages", new ArrayCodec<>(PageConfig.CODEC, PageConfig[]::new)),
                     (config, value) -> config.pages = value,
                     (config) -> config.pages).add()
@@ -51,6 +60,9 @@ public class WelcomeConfig {
     private int fontSize = 18;
     private boolean alwaysShow = true;
     private boolean debug = false;
+    private boolean showPageCounter = true;
+    private String pageCounterText = "Page";
+    private boolean allowExitOnAnyPage = false;
     private PageConfig[] pages = new PageConfig[0];
 
     public WelcomeConfig() {
@@ -153,6 +165,30 @@ public class WelcomeConfig {
 
     public void setDebug(boolean debug) {
         this.debug = debug;
+    }
+
+    public boolean getShowPageCounter() {
+        return showPageCounter;
+    }
+
+    public void setShowPageCounter(boolean showPageCounter) {
+        this.showPageCounter = showPageCounter;
+    }
+
+    public String getPageCounterText() {
+        return pageCounterText;
+    }
+
+    public void setPageCounterText(String pageCounterText) {
+        this.pageCounterText = pageCounterText;
+    }
+
+    public boolean getAllowExitOnAnyPage() {
+        return allowExitOnAnyPage;
+    }
+
+    public void setAllowExitOnAnyPage(boolean allowExitOnAnyPage) {
+        this.allowExitOnAnyPage = allowExitOnAnyPage;
     }
 
     public List<PageConfig> getPages() {

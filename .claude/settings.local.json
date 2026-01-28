@@ -5,7 +5,9 @@
       "Bash(mvn clean package:*)",
       "Bash(jar tf:*)",
       "Bash(find:*)",
-      "Bash(mvn package:*)"
+      "Bash(mvn package:*)",
+      "Bash(dir:*)",
+      "Bash(findstr:*)"
     ]
   }
 }
