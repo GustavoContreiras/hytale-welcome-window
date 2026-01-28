@@ -108,8 +108,8 @@ jobs:
 
           echo "Metadata: $METADATA"
 
-          # Upload to CurseForge
-          UPLOAD_URL="https://hytale.curseforge.com/api/projects/${CURSEFORGE_PROJECT_ID}/upload-file"
+          # Upload to CurseForge (unified platform)
+          UPLOAD_URL="https://www.curseforge.com/api/projects/${CURSEFORGE_PROJECT_ID}/upload-file"
           echo "Upload URL: $UPLOAD_URL"
 
           RESPONSE=$(curl -L -X POST \
