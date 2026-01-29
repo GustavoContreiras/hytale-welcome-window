@@ -2,3 +2,5 @@ commit-msg:
   commands:
     commitlint:
       run: npx commitlint --edit {1}
+    gitpull:
+      run: git fetch; git pull
