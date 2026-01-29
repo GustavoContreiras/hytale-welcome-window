@@ -1,6 +1,9 @@
 package gustavocontreiras.commands;
 
-import gustavocontreiras.events.WelcomeWindowEvent;
+import java.util.concurrent.CompletableFuture;
+
+import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
+
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.GameMode;
@@ -10,8 +13,8 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncC
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
-import java.util.concurrent.CompletableFuture;
+
+import gustavocontreiras.events.WelcomeWindowEvent;
 
 public class WelcomeWindowCommand extends AbstractAsyncCommand {
 

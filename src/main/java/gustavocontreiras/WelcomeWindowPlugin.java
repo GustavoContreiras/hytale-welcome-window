@@ -5,6 +5,7 @@ import com.hypixel.hytale.server.core.util.Config;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import gustavocontreiras.commands.WelcomeWindowCommand;
+import gustavocontreiras.commands.WelcomeWindowConfigCommand;
 import gustavocontreiras.config.ConfigMigrator;
 import gustavocontreiras.config.WelcomeConfig;
 import gustavocontreiras.events.WelcomeWindowEvent;
@@ -46,6 +47,7 @@ public class WelcomeWindowPlugin extends JavaPlugin {
         config.save();
         ConfigMigrator.createBackupWithDefaults(this.getDataDirectory());
         this.getCommandRegistry().registerCommand(new WelcomeWindowCommand("welcome", "Opens the welcome window"));
+        this.getCommandRegistry().registerCommand(new WelcomeWindowConfigCommand("welcomeconfig", "Opens the welcome window configuration"));
         this.getEventRegistry().registerGlobal(PlayerReadyEvent.class, WelcomeWindowEvent::onPlayerReady);
     }
 
