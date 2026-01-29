@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/GustavoContreiras/hytale-welcome-window/compare/v2.1.0...v2.2.0) (2026-01-29)
+
+
+### Features
+
+* allow edit configurations via /welcomeconfig command ([6a1d18c](https://github.com/GustavoContreiras/hytale-welcome-window/commit/6a1d18cbf050b0d88b5fd2f033b37802ef7f80f3))
+
 # [2.1.0](https://github.com/GustavoContreiras/hytale-welcome-window/compare/v2.0.1...v2.1.0) (2026-01-29)
 
 
