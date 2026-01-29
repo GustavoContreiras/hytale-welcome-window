@@ -44,3 +44,7 @@ package-lock.json
 
 ### Extracted library classes ###
 lib/au/
+au/
+com/
+Common/
+nul
