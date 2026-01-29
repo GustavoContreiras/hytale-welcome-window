@@ -1,0 +1,13 @@
+{
+  "title": "{meta.guides.title}",
+  "pages": [
+    "learning-to-learn.mdx",
+    "java-basics",
+    "plugin",
+    "ecs",
+    "...",
+    "---Gameplay Systems---",
+    "prefabs.mdx"
+  ],
+  "icon": "GraduationCap"
+}

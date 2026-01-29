@@ -1,0 +1,13 @@
+{
+  "title": "{meta.established_information.title}",
+  "pages": [
+    "faq.mdx",
+    "developer-qa-insights.mdx",
+    "server-plugin-insights.mdx",
+    "---{meta.established_information.separator}---",
+    "server",
+    "client",
+    "gameplay"
+  ],
+  "icon": "Construction"
+}
