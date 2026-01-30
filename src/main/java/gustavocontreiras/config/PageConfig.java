@@ -3,6 +3,7 @@ package gustavocontreiras.config;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
+import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,14 +16,14 @@ public class PageConfig {
             .append(new KeyedCodec<>("ButtonTitle", Codec.STRING),
                     (config, value) -> config.buttonTitle = value,
                     (config) -> config.buttonTitle).add()
-            .append(new KeyedCodec<>("Paragraphs", Codec.STRING_ARRAY),
-                    (config, value) -> config.paragraphs = value,
-                    (config) -> config.paragraphs).add()
+            .append(new KeyedCodec<>("Elements", new ArrayCodec<>(ContentElement.CODEC, ContentElement[]::new)),
+                    (config, value) -> config.elements = value,
+                    (config) -> config.elements).add()
             .build();
 
     private String title = "";
     private String buttonTitle = "";
-    private String[] paragraphs = new String[0];
+    private ContentElement[] elements = new ContentElement[0];
 
     public PageConfig() {
     }
@@ -43,11 +44,11 @@ public class PageConfig {
         this.buttonTitle = buttonTitle;
     }
 
-    public List<String> getParagraphs() {
-        return Arrays.asList(paragraphs);
+    public List<ContentElement> getElements() {
+        return Arrays.asList(elements);
     }
 
-    public void setParagraphs(List<String> paragraphs) {
-        this.paragraphs = paragraphs.toArray(new String[0]);
+    public void setElements(List<ContentElement> elements) {
+        this.elements = elements.toArray(new ContentElement[0]);
     }
 }

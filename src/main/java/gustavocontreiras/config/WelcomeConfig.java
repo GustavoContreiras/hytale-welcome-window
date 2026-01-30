@@ -77,18 +77,18 @@ public class WelcomeConfig {
         PageConfig welcomePage = new PageConfig();
         welcomePage.setTitle("Welcome to Hytale");
         welcomePage.setButtonTitle("Commands");
-        welcomePage.setParagraphs(Arrays.asList(
-                "Here are some available commands:",
-                "",
-                "/help - shows all available commands",
-                "/welcome - shows this welcome window"
+        welcomePage.setElements(Arrays.asList(
+                new ContentElement("p", "Here are some available commands:"),
+                new ContentElement("p", ""),
+                new ContentElement("p", "/help - shows all available commands"),
+                new ContentElement("p", "/welcome - shows this welcome window")
         ));
 
         PageConfig dyingPage = new PageConfig();
         dyingPage.setTitle("Dying");
         dyingPage.setButtonTitle("Dying");
-        dyingPage.setParagraphs(Arrays.asList(
-                "When you are killed you loose part of your equipments."
+        dyingPage.setElements(Arrays.asList(
+                new ContentElement("p", "When you are killed you loose part of your equipments.")
         ));
 
         config.pages = new PageConfig[] { welcomePage, dyingPage };

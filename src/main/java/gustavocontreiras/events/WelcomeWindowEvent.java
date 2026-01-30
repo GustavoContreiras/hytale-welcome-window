@@ -1,7 +1,6 @@
 package gustavocontreiras.events;
 
 import au.ellie.hyui.builders.ButtonBuilder;
-// import au.ellie.hyui.builders.HudBuilder;
 import au.ellie.hyui.builders.PageBuilder;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -14,6 +13,7 @@ import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import gustavocontreiras.WelcomeWindowPlugin;
+import gustavocontreiras.config.ContentElement;
 import gustavocontreiras.config.PageConfig;
 import gustavocontreiras.config.WelcomeConfig;
 
@@ -25,9 +25,6 @@ public class WelcomeWindowEvent {
     public static void onPlayerReady(PlayerReadyEvent event) {
         Player player = event.getPlayer();
         // player.sendMessage(Message.raw("[WelcomeWindow] start"));
-
-        // Show HUD question mark button
-        // WelcomeWindowEvent.showHudButton(player);
 
         // Load configuration to check alwaysShow setting
         WelcomeConfig config = WelcomeWindowPlugin.getInstance().getWelcomeConfig().get();
@@ -96,7 +93,7 @@ public class WelcomeWindowEvent {
         for (int i = 0; i < pageConfigs.size(); i++) {
             PageConfig pageConfig = pageConfigs.get(i);
             String currentPageTitle = pageConfig.getTitle();
-            List<String> pageParagraphs = pageConfig.getParagraphs();
+            List<ContentElement> pageElements = pageConfig.getElements();
             boolean isFirstPage = (i == 0);
             boolean isLastPage = (i == pageConfigs.size() - 1);
 
@@ -130,8 +127,8 @@ public class WelcomeWindowEvent {
                         <div style="layout-mode: topscrolling; flex-weight: 1; padding: 0;">
             """);
 
-            for (int k = 0; k < pageParagraphs.size(); k++) {
-                html.append("<p style=\"font-size: " + fontSize + ";\">" + pageParagraphs.get(k) + "</p>\n");
+            for (ContentElement element : pageElements) {
+                html.append(element.toHtml(fontSize));
             }
   
             html.append("""
@@ -242,34 +239,4 @@ public class WelcomeWindowEvent {
 
         return pages;
     }
-
-    // public static void showHudButton(Player player) {
-    //     Ref<EntityStore> ref = player.getReference();
-
-    //     if (ref == null) {
-    //         return;
-    //     }
-
-    //     Store<EntityStore> store = ref.getStore();
-    //     PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
-
-    //     if (playerRef == null) {
-    //         return;
-    //     }
-
-    //     // Create HUD button in top right corner
-    //     String hudHtml = """
-    //         <div style="anchor-top: 10; anchor-horizontal: 1; padding-right: 10;">
-    //             <button id="helpBtn" style="font-size: 24; padding: 8; min-width: 32; min-height: 32;">?</button>
-    //         </div>
-    //         """;
-
-    //     // Create HUD with click event listener to open WelcomeWindow
-    //     HudBuilder.hudForPlayer(playerRef)
-    //         .fromHtml(hudHtml)
-    //         .addEventListener("helpBtn", CustomUIEventBindingType.Activating, ctx -> {
-    //             WelcomeWindowEvent.openWelcomeWindow(player);
-    //         })
-    //         .show(store);
-    // }
 }

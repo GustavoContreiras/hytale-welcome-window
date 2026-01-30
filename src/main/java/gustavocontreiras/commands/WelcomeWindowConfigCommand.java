@@ -22,8 +22,10 @@ import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.core.util.Config;
 import gustavocontreiras.WelcomeWindowPlugin;
+import gustavocontreiras.config.ContentElement;
 import gustavocontreiras.config.PageConfig;
 import gustavocontreiras.config.WelcomeConfig;
+import gustavocontreiras.events.WelcomeWindowEvent;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
 import java.util.ArrayList;
@@ -234,11 +236,19 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
                     pc.setTitle(state.pageTitles.get(i).get());
                     pc.setButtonTitle(state.pageButtonTitles.get(i).get());
 
-                    List<String> paras = new ArrayList<>();
-                    for (AtomicReference<String> paraRef : state.pageParagraphs.get(i)) {
-                        paras.add(paraRef.get());
+                    List<ContentElement> elements = new ArrayList<>();
+                    for (EditorElement editorEl : state.pageElements.get(i)) {
+                        ContentElement el = new ContentElement(
+                                editorEl.element.get(),
+                                editorEl.content.get(),
+                                editorEl.style.get(),
+                                editorEl.id.get()
+                        );
+                        el.setWidth(editorEl.width.get().intValue());
+                        el.setHeight(editorEl.height.get().intValue());
+                        elements.add(el);
                     }
-                    pc.setParagraphs(paras);
+                    pc.setElements(elements);
                     updatedPages.add(pc);
                 }
                 cfg.setPages(updatedPages);
@@ -246,7 +256,7 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
                 config.save();
 
                 player.sendMessage(Message.raw("[WelcomeWindow] Config saved successfully."));
-                player.getPageManager().setPage(player.getReference(), store, Page.None);
+                WelcomeWindowEvent.openWelcomeWindow(player);
             });
         });
 
@@ -305,17 +315,35 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
                                 <input id="pageButtonTitle" type="text" style="flex-weight: 1" />
                             </div>
 
-                            <p style="font-size: 14; color: #cccccc; anchor-bottom: 4;">Paragraphs</p>
+                            <p style="font-size: 14; color: #cccccc; anchor-bottom: 4;">Elements</p>
                 """);
 
-            List<AtomicReference<String>> paragraphs = state.pageParagraphs.get(selectedIdx);
-            for (int i = 0; i < paragraphs.size(); i++) {
-                htmlBuilder.append("""
+            List<EditorElement> elements = state.pageElements.get(selectedIdx);
+            for (int i = 0; i < elements.size(); i++) {
+                boolean isImg = "img".equals(elements.get(i).element.get());
+                if (isImg) {
+                    htmlBuilder.append("""
                             <div style="layout-mode: center; anchor-top: 2;">
-                                <input id="para_%d" type="text" style="flex-weight: 1;" />
-                                <button id="removePara_%d" style="anchor-max-width: 100; padding-left: 4;">-</button>
+                                <select id="elTag_%d" style="anchor-width: 80;"></select>
+                                <input id="elChild_%d" type="text" style="flex-weight: 1; padding-left: 4;" />
+                                <p style="font-size: 12; anchor-width: 20; padding-left: 4;">W</p>
+                                <input id="elWidth_%d" type="number" style="anchor-width: 60;" />
+                                <p style="font-size: 12; anchor-width: 16; padding-left: 4;">H</p>
+                                <input id="elHeight_%d" type="number" style="anchor-width: 60;" />
+                                <select id="elStyle_%d" style="anchor-width: 80; padding-left: 4;"></select>
+                                <button id="removeEl_%d" style="anchor-max-width: 30; padding-left: 4;">-</button>
                             </div>
-                    """.formatted(i, i));
+                    """.formatted(i, i, i, i, i, i));
+                } else {
+                    htmlBuilder.append("""
+                            <div style="layout-mode: center; anchor-top: 2;">
+                                <select id="elTag_%d" style="anchor-width: 80;"></select>
+                                <input id="elChild_%d" type="text" style="flex-weight: 2; padding-left: 4;" />
+                                <input id="elStyle_%d" type="text" style="flex-weight: 1; padding-left: 4;" />
+                                <button id="removeEl_%d" style="anchor-max-width: 30; padding-left: 4;">-</button>
+                            </div>
+                    """.formatted(i, i, i, i));
+                }
             }
         }
 
@@ -324,7 +352,7 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
                         </div>
                         <div style="layout-mode: center; anchor-top: 8;">
                             <button id="backBtn" style="anchor-height: 30;">Back</button>
-                            <button id="addPara" style="anchor-height: 30; padding-left: 4;">Add paragraph</button>
+                            <button id="addElement" style="anchor-height: 30; padding-left: 4;">Add element</button>
                         </div>
                     </div>
                 </div>
@@ -365,9 +393,9 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
             button.addEventListener(CustomUIEventBindingType.Activating, clickEvent -> {
                 state.pageTitles.add(new AtomicReference<>("New page"));
                 state.pageButtonTitles.add(new AtomicReference<>("New page"));
-                List<AtomicReference<String>> paras = new ArrayList<>();
-                paras.add(new AtomicReference<>("New page paragraph"));
-                state.pageParagraphs.add(paras);
+                List<EditorElement> els = new ArrayList<>();
+                els.add(new EditorElement("p", "New page content", "", "", 0, 0));
+                state.pageElements.add(els);
                 state.selectedPageIndex.set(state.pageTitles.size() - 1);
                 openPagesEditor(player, store, state);
             });
@@ -394,26 +422,35 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
                 state.pageButtonTitles.get(selectedIdx).get(),
                 state.pageButtonTitles.get(selectedIdx));
 
-            List<AtomicReference<String>> paragraphs = state.pageParagraphs.get(selectedIdx);
+            List<EditorElement> elements = state.pageElements.get(selectedIdx);
 
-            for (int i = 0; i < paragraphs.size(); i++) {
-                final int paraIndex = i;
+            for (int i = 0; i < elements.size(); i++) {
+                final int elIndex = i;
+                EditorElement editorEl = elements.get(i);
+                boolean isImg = "img".equals(editorEl.element.get());
 
-                wireTextField(page, "para_" + i,
-                    paragraphs.get(i).get(),
-                    paragraphs.get(i));
+                wireTagDropdown(page, "elTag_" + i, editorEl.element.get(), editorEl.element, player, store, state);
+                wireTextField(page, "elChild_" + i, editorEl.content.get(), editorEl.content);
 
-                page.getById("removePara_" + i, ButtonBuilder.class).ifPresent(button -> {
+                if (isImg) {
+                    wireNumberField(page, "elWidth_" + i, editorEl.width.get().intValue(), editorEl.width);
+                    wireNumberField(page, "elHeight_" + i, editorEl.height.get().intValue(), editorEl.height);
+                    wireStyleDropdown(page, "elStyle_" + i, editorEl.style.get(), editorEl.style);
+                } else {
+                    wireTextField(page, "elStyle_" + i, editorEl.style.get(), editorEl.style);
+                }
+
+                page.getById("removeEl_" + i, ButtonBuilder.class).ifPresent(button -> {
                     button.addEventListener(CustomUIEventBindingType.Activating, clickEvent -> {
-                        paragraphs.remove(paraIndex);
+                        elements.remove(elIndex);
                         openPagesEditor(player, store, state);
                     });
                 });
             }
 
-            page.getById("addPara", ButtonBuilder.class).ifPresent(button -> {
+            page.getById("addElement", ButtonBuilder.class).ifPresent(button -> {
                 button.addEventListener(CustomUIEventBindingType.Activating, clickEvent -> {
-                    paragraphs.add(new AtomicReference<>(""));
+                    elements.add(new EditorElement("p", "", "", "", 0, 0));
                     openPagesEditor(player, store, state);
                 });
             });
@@ -481,13 +518,42 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
             button.addEventListener(CustomUIEventBindingType.Activating, clickEvent -> {
                 state.pageTitles.remove(pageIndex);
                 state.pageButtonTitles.remove(pageIndex);
-                state.pageParagraphs.remove(pageIndex);
+                state.pageElements.remove(pageIndex);
                 state.selectedPageIndex.set(state.pageTitles.isEmpty() ? -1 : 0);
                 openPagesEditor(player, store, state);
             });
         });
 
         page.open(playerRef, store);
+    }
+
+    private void wireTagDropdown(PageBuilder page, String id, String initialValue, AtomicReference<String> holder,
+                                 Player player, Store<EntityStore> store, EditorState state) {
+        page.getById(id, DropdownBoxBuilder.class).ifPresent(dropdown -> {
+            dropdown.addEntry("p", "p");
+            dropdown.addEntry("img", "img");
+            dropdown.withValue(initialValue);
+            dropdown.addEventListener(CustomUIEventBindingType.ValueChanged, (value, ctx) -> {
+                holder.set(value);
+                openPagesEditor(player, store, state);
+            });
+        });
+    }
+
+    private void wireStyleDropdown(PageBuilder page, String id, String initialValue, AtomicReference<String> holder) {
+        page.getById(id, DropdownBoxBuilder.class).ifPresent(dropdown -> {
+            dropdown.addEntry("layout-mode: left;", "Left");
+            dropdown.addEntry("layout-mode: center;", "Center");
+            dropdown.addEntry("layout-mode: right;", "Right");
+            String value = initialValue != null && !initialValue.isEmpty() ? initialValue : "layout-mode: center;";
+            dropdown.withValue(value);
+            if (holder.get() == null || holder.get().isEmpty()) {
+                holder.set(value);
+            }
+            dropdown.addEventListener(CustomUIEventBindingType.ValueChanged, (v, ctx) -> {
+                holder.set(v);
+            });
+        });
     }
 
     private void wireTextField(PageBuilder page, String id, String initialValue, AtomicReference<String> holder) {
@@ -523,6 +589,24 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
         });
     }
 
+    static class EditorElement {
+        final AtomicReference<String> element;
+        final AtomicReference<String> content;
+        final AtomicReference<String> style;
+        final AtomicReference<String> id;
+        final AtomicReference<Double> width;
+        final AtomicReference<Double> height;
+
+        EditorElement(String element, String content, String style, String id, int width, int height) {
+            this.element = new AtomicReference<>(element);
+            this.content = new AtomicReference<>(content);
+            this.style = new AtomicReference<>(style);
+            this.id = new AtomicReference<>(id);
+            this.width = new AtomicReference<>((double) width);
+            this.height = new AtomicReference<>((double) height);
+        }
+    }
+
     private static class EditorState {
         final AtomicReference<String> backButtonText;
         final AtomicReference<String> nextButtonText;
@@ -541,7 +625,7 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
 
         final List<AtomicReference<String>> pageTitles;
         final List<AtomicReference<String>> pageButtonTitles;
-        final List<List<AtomicReference<String>>> pageParagraphs;
+        final List<List<EditorElement>> pageElements;
         final AtomicReference<Integer> selectedPageIndex;
 
         EditorState(WelcomeConfig cfg) {
@@ -562,17 +646,24 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
 
             this.pageTitles = new ArrayList<>();
             this.pageButtonTitles = new ArrayList<>();
-            this.pageParagraphs = new ArrayList<>();
+            this.pageElements = new ArrayList<>();
 
             for (PageConfig pageConfig : cfg.getPages()) {
                 this.pageTitles.add(new AtomicReference<>(pageConfig.getTitle()));
                 this.pageButtonTitles.add(new AtomicReference<>(pageConfig.getButtonTitle()));
 
-                List<AtomicReference<String>> paras = new ArrayList<>();
-                for (String p : pageConfig.getParagraphs()) {
-                    paras.add(new AtomicReference<>(p));
+                List<EditorElement> els = new ArrayList<>();
+                for (ContentElement el : pageConfig.getElements()) {
+                    els.add(new EditorElement(
+                            el.getElement(),
+                            el.getContent() != null ? el.getContent() : "",
+                            el.getStyle() != null ? el.getStyle() : "",
+                            el.getId() != null ? el.getId() : "",
+                            el.getWidth(),
+                            el.getHeight()
+                    ));
                 }
-                this.pageParagraphs.add(paras);
+                this.pageElements.add(els);
             }
 
             this.selectedPageIndex = new AtomicReference<>(cfg.getPages().isEmpty() ? -1 : 0);

@@ -33,7 +33,12 @@ public class ConfigMigrator {
             // PageConfig keys
             Map.entry("title", "Title"),
             Map.entry("buttonTitle", "ButtonTitle"),
-            Map.entry("paragraphs", "Paragraphs")
+            Map.entry("paragraphs", "Paragraphs"),
+            Map.entry("element", "Element"),
+            Map.entry("child", "Content"),
+            Map.entry("Child", "Content"),
+            Map.entry("style", "Style"),
+            Map.entry("id", "Id")
     );
 
     /**
@@ -97,6 +102,10 @@ public class ConfigMigrator {
             if (KEY_MIGRATIONS.containsKey(key)) {
                 return true;
             }
+            // Detect old Paragraphs string array that needs conversion to Elements
+            if (key.equals("Paragraphs")) {
+                return true;
+            }
             // Check nested objects (like pages array)
             JsonElement element = obj.get(key);
             if (element.isJsonArray()) {
@@ -145,11 +154,20 @@ public class ConfigMigrator {
                 JsonObject pageObj = new JsonObject();
                 pageObj.addProperty("Title", page.getTitle());
                 pageObj.addProperty("ButtonTitle", page.getButtonTitle());
-                JsonArray paragraphs = new JsonArray();
-                for (String p : page.getParagraphs()) {
-                    paragraphs.add(p);
+                JsonArray elements = new JsonArray();
+                for (ContentElement el : page.getElements()) {
+                    JsonObject elObj = new JsonObject();
+                    elObj.addProperty("Element", el.getElement());
+                    elObj.addProperty("Content", el.getContent());
+                    if (el.getStyle() != null && !el.getStyle().isEmpty()) {
+                        elObj.addProperty("Style", el.getStyle());
+                    }
+                    if (el.getId() != null && !el.getId().isEmpty()) {
+                        elObj.addProperty("Id", el.getId());
+                    }
+                    elements.add(elObj);
                 }
-                pageObj.add("Paragraphs", paragraphs);
+                pageObj.add("Elements", elements);
                 pages.add(pageObj);
             }
             root.add("Pages", pages);
@@ -169,7 +187,21 @@ public class ConfigMigrator {
             String newKey = KEY_MIGRATIONS.getOrDefault(key, key);
             JsonElement value = original.get(key);
 
-            if (value.isJsonArray()) {
+            // Convert old Paragraphs (string array) to Elements (object array)
+            if (newKey.equals("Paragraphs") && value.isJsonArray()) {
+                JsonArray elementsArray = new JsonArray();
+                for (JsonElement item : value.getAsJsonArray()) {
+                    if (item.isJsonPrimitive() && item.getAsJsonPrimitive().isString()) {
+                        JsonObject elementObj = new JsonObject();
+                        elementObj.addProperty("Element", "p");
+                        elementObj.addProperty("Content", item.getAsString());
+                        elementsArray.add(elementObj);
+                    } else if (item.isJsonObject()) {
+                        elementsArray.add(migrateObject(item.getAsJsonObject()));
+                    }
+                }
+                migrated.add("Elements", elementsArray);
+            } else if (value.isJsonArray()) {
                 JsonArray migratedArray = new JsonArray();
                 for (JsonElement item : value.getAsJsonArray()) {
                     if (item.isJsonObject()) {
