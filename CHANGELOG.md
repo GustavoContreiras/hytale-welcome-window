@@ -1,3 +1,11 @@
+# [2.3.0](https://github.com/GustavoContreiras/hytale-welcome-window/compare/v2.2.0...v2.3.0) (2026-01-30)
+
+
+### Features
+
+* add support to images ([bd6e45a](https://github.com/GustavoContreiras/hytale-welcome-window/commit/bd6e45ac1e397d23b570b14a5a95d7c601d965d2))
+* set better default values ([98b2736](https://github.com/GustavoContreiras/hytale-welcome-window/commit/98b27361f0c7d271d9fa0954b5100fcc846a5fdf))
+
 # [2.2.0](https://github.com/GustavoContreiras/hytale-welcome-window/compare/v2.1.0...v2.2.0) (2026-01-29)
 
 
