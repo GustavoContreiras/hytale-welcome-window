@@ -13,7 +13,7 @@ Use it to explain which mods you added to your server and how to use them.
 3. Run the server
 4. Login
 5. Log into the game
-6. Run `/welcomeconfig`
+6. Run `/welcomeconfig` (or edit `gustavocontreiras_WelcomeWindow/config.json`)
 
 PS: Use empty strings (`""`) in the paragraphs to have more space between the texts.
 
