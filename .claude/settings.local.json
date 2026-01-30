@@ -15,7 +15,8 @@
       "WebFetch(domain:hyui.gitbook.io)",
       "Bash(jar:*)",
       "Bash(java:*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "WebFetch(domain:docs.curseforge.com)"
     ]
   }
 }

@@ -4,17 +4,16 @@ The purpose of this library is to provide a welcome window with information abou
 
 Use it to explain which mods you added to your server and how to use them.
 
-![alt text](https://media.forgecdn.net/attachments/1493/984/welcome-window-2-png.png)
-
 ## Usage 
 
 ### Server admin
 
-1.  Download the `.jar` file
-2.  Put it into your `mods` folder
-3.  Run the server
-4.  Login
-5.  Edit `./mods/WelcomeWindow/config.json`
+1. Download the `.jar` file
+2. Put it into your `mods` folder
+3. Run the server
+4. Login
+5. Log into the game
+6. Run `/welcomeconfig`
 
 PS: Use empty strings (`""`) in the paragraphs to have more space between the texts.
 
@@ -166,3 +165,7 @@ PS: Use empty strings (`""`) in the paragraphs to have more space between the te
   ]
 }
 ```
+
+# Changelog
+
+Check [changelog.md](https://github.com/GustavoContreiras/hytale-welcome-window/blob/main/CHANGELOG.md) to see latest changes implemented in the package.
