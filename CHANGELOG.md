@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/GustavoContreiras/hytale-welcome-window/compare/v2.3.0...v2.3.1) (2026-01-30)
+
+
+### Bug Fixes
+
+* fix background color of disabled button for current page ([02eb093](https://github.com/GustavoContreiras/hytale-welcome-window/commit/02eb09393b4c7529a13430b839d7f7addf335a1d))
+
 # [2.3.0](https://github.com/GustavoContreiras/hytale-welcome-window/compare/v2.2.0...v2.3.0) (2026-01-30)
 
 
