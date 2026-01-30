@@ -33,133 +33,539 @@ PS: Use empty strings (`""`) in the paragraphs to have more space between the te
 {
   "BackButtonText": "Back",
   "NextButtonText": "Next",
-  "DoneButtonText": "Finish",
+  "DoneButtonText": "Done",
   "PageCounterText": "Page",
   "MenuWidth": 260,
   "ContainerWidth": 900,
-  "ContainerHeight": 420,
+  "ContainerHeight": 500,
   "FontSize": 16,
   "AlwaysShow": false,
   "Debug": false,
   "ShowPageCounter": true,
-  "AllowExitOnAnyPage": true,
+  "AllowExitOnAnyPage": false,
   "Pages": [
     {
       "Title": "Welcome to Hytale",
       "ButtonTitle": "Commands",
-      "Paragraphs": [
-        "Here are some available commands:",
-        "",
-        "/help - shows all available commands",
-        "/welcome - shows this window",
-        "/modlist - shows all installed mods",
-        "/lvl gui - panel to assign level points",
-        "/simpleclaims - claim a map area just for you",
-        "/hidearmor - hide your equipment on your skin",
-        "/sit - allows changing the character's pose",
-        "",
-        "Press ENTER or / to open the chat and run these commands"
+      "Elements": [
+        {
+          "Element": "img",
+          "Content": "https://www.clipartmax.com/png/full/3-39096_welcome-clipart-welcome-clipart.png",
+          "Style": "layout-mode: center;",
+          "Id": "",
+          "Width": 482,
+          "Height": 134
+        },
+        {
+          "Element": "p",
+          "Content": "",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "/help - shows all available commands",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "/welcome - shows this window",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "/modlist - shows all installed mods",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "/lvl gui - panel to assign level points",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "/simpleclaims - claim an area of the map just for you",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "/hidearmor - hide your equipment on your skin",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "/sit - allows changing the character's sitting positions",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "Press ENTER or / to open the chat and execute these commands",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        }
       ]
     },
     {
       "Title": "Level",
       "ButtonTitle": "Level",
-      "Paragraphs": [
-        "By killing creatures, you gain experience.",
-        "",
-        "When leveling up, type /lvl gui to assign your level points.",
-        "",
-        "You can improve your health, mana, stamina, damage, defense,",
-        "mining, woodcutting, oxygen, and ammo capacity."
+      "Elements": [
+        {
+          "Element": "p",
+          "Content": "By killing creatures, you gain experience.",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "When you level up, type /lvl gui to assign your level points.",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "You can improve your health, mana, stamina, damage, defense,",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "mining, woodcutting, oxygen, and ammo capacity.",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        }
       ]
     },
     {
       "Title": "Map",
       "ButtonTitle": "Map",
-      "Paragraphs": [
-        "Places you visit will be saved on your map.",
-        "",
-        "Press M to view it."
+      "Elements": [
+        {
+          "Element": "p",
+          "Content": "Places you visit will be permanently saved on your map.",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "Press M to view it.",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        }
       ]
     },
     {
       "Title": "Inventory",
       "ButtonTitle": "Inventory",
-      "Paragraphs": [
-        "Press TAB to:",
-        "- Equip armor pieces and off-hand items",
-        "- Craft tools and crafting tables",
-        "- Organize your items",
-        "",
-        "Press 'shift' + 'left mouse button' to quickly transfer.",
-        "Press 'shift' + 'right mouse button' to select half the",
-        "amount.",
-        "Press the 'right mouse button' to select only one unit.",
-        "",
-        "Items are automatically organized and stacked when placed",
-        "in your inventory.",
-        "",
-        "You can hide your armor on your skin using the /hidearmor command"
+      "Elements": [
+        {
+          "Element": "p",
+          "Content": "Press TAB to:",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "- Equip armor pieces and off-hand items",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "- Craft tools and crafting tables",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "- Organize your items",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "Press Shift + Left Mouse Button to transfer quickly.",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "Press Shift + Right Mouse Button to select half of the",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "amount.",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "Press Right Mouse Button to select a single unit.",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "Items are automatically organized and stacked when placed",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "in your inventory.",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "You can hide your armor on your skin using the /hidearmor command",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        }
       ]
     },
     {
-      "Title": "Counter-attack",
+      "Title": "Parry",
       "ButtonTitle": "Parry",
-      "Paragraphs": [
-        "By blocking at the exact moment you are about to receive an",
-        "attack, the enemy will be left open and vulnerable to a counter-attack."
+      "Elements": [
+        {
+          "Element": "p",
+          "Content": "When you block at the exact moment you are being attacked,",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "the enemy will be staggered and vulnerable to a counterattack.",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        }
       ]
     },
     {
       "Title": "Durability",
       "ButtonTitle": "Durability",
-      "Paragraphs": [
-        "Weapon, tool, and equipment durability has been disabled."
+      "Elements": [
+        {
+          "Element": "p",
+          "Content": "Weapon, tool, and equipment durability has been disabled.",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        }
       ]
     },
     {
       "Title": "Claiming",
       "ButtonTitle": "Claiming",
-      "Paragraphs": [
-        "Type /simpleclaims to:",
-        "- View areas on the map already occupied by other players",
-        "- View areas on the map protected from destruction",
-        "- Claim an area for yourself on the map",
-        "",
-        "You can also type '/simpleclaims claim' to claim the area",
-        "you are standing in or '/simpleclaims unclaim' to release it."
+      "Elements": [
+        {
+          "Element": "p",
+          "Content": "Type /simpleclaims to:",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "- View areas already claimed by other players",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "- View areas protected from destruction",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "- Claim an area of the map for yourself",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "You can also type '/simpleclaims claim' to claim the area",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "you are in, or '/simpleclaims unclaim' to release it.",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        }
       ]
     },
     {
       "Title": "Death",
       "ButtonTitle": "Death",
-      "Paragraphs": [
-        "Upon death, some of your equipment, tools, and weapons may be",
-        "lost.",
-        "",
-        "A coffin containing your items will remain at the place where",
-        "you died until someone retrieves them."
+      "Elements": [
+        {
+          "Element": "p",
+          "Content": "When you die, some of your equipment, tools, and weapons may be",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "lost.",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "A coffin containing your items will remain where you died until",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "someone retrieves them.",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        }
       ]
     },
     {
       "Title": "Fishing",
       "ButtonTitle": "Fishing",
-      "Paragraphs": [
-        "Craft a fishing rod through your inventory.",
-        "",
-        "Place the bait in the water by right-clicking and wait",
-        "a few moments.",
-        "",
-        "When pulling the bait out of the water, you may have caught a fish."
+      "Elements": [
+        {
+          "Element": "p",
+          "Content": "Craft a fishing rod through your inventory.",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "Place the bait in the water by right-clicking and wait",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "a few moments.",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "When pulling the bait out of the water, you may have caught a fish.",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        }
       ]
     },
     {
       "Title": "Mount",
       "ButtonTitle": "Mount",
-      "Paragraphs": [
-        "Approach a horse and press F to mount it",
-        "",
-        "Type '/mount dismount' to walk on foot again."
+      "Elements": [
+        {
+          "Element": "p",
+          "Content": "Approach a horse and press F to mount it.",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "Type '/mount dismount' to return to walking on foot.",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        }
       ]
     }
   ]
