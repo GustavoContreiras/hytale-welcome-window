@@ -17,7 +17,8 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "mvn versions:set -DnewVersion=${nextRelease.version} -DgenerateBackupPoms=false"
+        "prepareCmd": "mvn versions:set -DnewVersion=${nextRelease.version} -DgenerateBackupPoms=false",
+        "publishCmd": "echo \"version=${nextRelease.version}\" >> $GITHUB_OUTPUT"
       }
     ],
     [

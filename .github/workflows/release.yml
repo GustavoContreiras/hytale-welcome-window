@@ -48,37 +48,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npx semantic-release 2>&1 | tee semantic-release.log
-        continue-on-error: true
-
-      - name: Extract version from semantic-release
-        id: extract-version
-        if: steps.semantic-release.outcome == 'success'
-        run: |
-          # Get the latest git tag created by semantic-release
-          VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
-          if [ -z "$VERSION" ]; then
-            # Fallback: try to extract from semantic-release log
-            VERSION=$(grep -oP 'Published release \K[0-9]+\.[0-9]+\.[0-9]+' semantic-release.log 2>/dev/null || echo "")
-          fi
-          if [ -z "$VERSION" ]; then
-            # Last fallback: get from pom.xml
-            VERSION=$(grep -oP '<version>\K[0-9]+\.[0-9]+\.[0-9]+' pom.xml | head -n 1)
-          fi
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "Extracted version: $VERSION"
+          npx semantic-release
 
       - name: Build JAR
-        if: steps.extract-version.outputs.version != ''
+        if: steps.semantic-release.outputs.version != ''
         run: |
           mvn clean package -DskipTests
 
       - name: Upload JAR to CurseForge
-        if: steps.extract-version.outputs.version != ''
+        if: steps.semantic-release.outputs.version != ''
         env:
           CURSEFORGE_API_TOKEN: ${{ secrets.CURSEFORGE_API_TOKEN }}
           CURSEFORGE_PROJECT_ID: ${{ vars.CURSEFORGE_PROJECT_ID }}
-          VERSION: ${{ steps.extract-version.outputs.version }}
+          VERSION: ${{ steps.semantic-release.outputs.version }}
         run: |
           JAR_FILE=$(find target -name "*.jar" -not -name "*-sources.jar" -not -name "*-javadoc.jar" | head -n 1)
           
