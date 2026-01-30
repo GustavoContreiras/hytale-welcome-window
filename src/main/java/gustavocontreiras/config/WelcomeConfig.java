@@ -53,12 +53,12 @@ public class WelcomeConfig {
 
     private String backButtonText = "Back";
     private String nextButtonText = "Next";
-    private String doneButtonText = "Finish";
-    private int menuWidth = 150;
-    private int containerWidth = 800;
+    private String doneButtonText = "Done";
+    private int menuWidth = 260;
+    private int containerWidth = 900;
     private int containerHeight = 500;
-    private int fontSize = 18;
-    private boolean alwaysShow = true;
+    private int fontSize = 16;
+    private boolean alwaysShow = false;
     private boolean debug = false;
     private boolean showPageCounter = true;
     private String pageCounterText = "Page";
@@ -74,24 +74,143 @@ public class WelcomeConfig {
     public static WelcomeConfig createWithSamplePages() {
         WelcomeConfig config = new WelcomeConfig();
 
-        PageConfig welcomePage = new PageConfig();
-        welcomePage.setTitle("Welcome to Hytale");
-        welcomePage.setButtonTitle("Commands");
-        welcomePage.setElements(Arrays.asList(
-                new ContentElement("p", "Here are some available commands:"),
+        // Page 1: Commands
+        PageConfig commandsPage = new PageConfig();
+        commandsPage.setTitle("Welcome to Hytale");
+        commandsPage.setButtonTitle("Commands");
+        ContentElement imgElement = new ContentElement("img",
+                "https://www.clipartmax.com/png/full/3-39096_welcome-clipart-welcome-clipart.png",
+                "layout-mode: center;");
+        imgElement.setWidth(482);
+        imgElement.setHeight(134);
+        commandsPage.setElements(Arrays.asList(
+            imgElement,
+            new ContentElement("p", ""),
+            new ContentElement("p", "/help - shows all available commands"),
+            new ContentElement("p", "/welcome - shows this window"),
+            new ContentElement("p", "/modlist - shows all installed mods"),
+            new ContentElement("p", "/lvl gui - panel to assign level points"),
+            new ContentElement("p", "/simpleclaims - claim an area of the map just for you"),
+            new ContentElement("p", "/hidearmor - hide your equipment on your skin"),
+            new ContentElement("p", "/sit - allows changing the character's sitting positions"),
+            new ContentElement("p", ""),
+            new ContentElement("p", "Press ENTER or / to open the chat and execute these commands")
+        ));
+
+        // Page 2: Level
+        PageConfig levelPage = new PageConfig();
+        levelPage.setTitle("Level");
+        levelPage.setButtonTitle("Level");
+        levelPage.setElements(Arrays.asList(
+                new ContentElement("p", "By killing creatures, you gain experience."),
                 new ContentElement("p", ""),
-                new ContentElement("p", "/help - shows all available commands"),
-                new ContentElement("p", "/welcome - shows this welcome window")
+                new ContentElement("p", "When you level up, type /lvl gui to assign your level points."),
+                new ContentElement("p", ""),
+                new ContentElement("p", "You can improve your health, mana, stamina, damage, defense,"),
+                new ContentElement("p", "mining, woodcutting, oxygen, and ammo capacity.")
         ));
 
-        PageConfig dyingPage = new PageConfig();
-        dyingPage.setTitle("Dying");
-        dyingPage.setButtonTitle("Dying");
-        dyingPage.setElements(Arrays.asList(
-                new ContentElement("p", "When you are killed you loose part of your equipments.")
+        // Page 3: Map
+        PageConfig mapPage = new PageConfig();
+        mapPage.setTitle("Map");
+        mapPage.setButtonTitle("Map");
+        mapPage.setElements(Arrays.asList(
+                new ContentElement("p", "Places you visit will be permanently saved on your map."),
+                new ContentElement("p", ""),
+                new ContentElement("p", "Press M to view it.")
         ));
 
-        config.pages = new PageConfig[] { welcomePage, dyingPage };
+        // Page 4: Inventory
+        PageConfig inventoryPage = new PageConfig();
+        inventoryPage.setTitle("Inventory");
+        inventoryPage.setButtonTitle("Inventory");
+        inventoryPage.setElements(Arrays.asList(
+                new ContentElement("p", "Press TAB to:"),
+                new ContentElement("p", "- Equip armor pieces and off-hand items"),
+                new ContentElement("p", "- Craft tools and crafting tables"),
+                new ContentElement("p", "- Organize your items"),
+                new ContentElement("p", ""),
+                new ContentElement("p", "Press Shift + Left Mouse Button to transfer quickly."),
+                new ContentElement("p", "Press Shift + Right Mouse Button to select half of the"),
+                new ContentElement("p", "amount."),
+                new ContentElement("p", "Press Right Mouse Button to select a single unit."),
+                new ContentElement("p", ""),
+                new ContentElement("p", "Items are automatically organized and stacked when placed"),
+                new ContentElement("p", "in your inventory."),
+                new ContentElement("p", ""),
+                new ContentElement("p", "You can hide your armor on your skin using the /hidearmor command")
+        ));
+
+        // Page 5: Parry
+        PageConfig parryPage = new PageConfig();
+        parryPage.setTitle("Parry");
+        parryPage.setButtonTitle("Parry");
+        parryPage.setElements(Arrays.asList(
+                new ContentElement("p", "When you block at the exact moment you are being attacked,"),
+                new ContentElement("p", "the enemy will be staggered and vulnerable to a counterattack.")
+        ));
+
+        // Page 6: Durability
+        PageConfig durabilityPage = new PageConfig();
+        durabilityPage.setTitle("Durability");
+        durabilityPage.setButtonTitle("Durability");
+        durabilityPage.setElements(Arrays.asList(
+                new ContentElement("p", "Weapon, tool, and equipment durability has been disabled.")
+        ));
+
+        // Page 7: Claiming
+        PageConfig claimingPage = new PageConfig();
+        claimingPage.setTitle("Claiming");
+        claimingPage.setButtonTitle("Claiming");
+        claimingPage.setElements(Arrays.asList(
+                new ContentElement("p", "Type /simpleclaims to:"),
+                new ContentElement("p", "- View areas already claimed by other players"),
+                new ContentElement("p", "- View areas protected from destruction"),
+                new ContentElement("p", "- Claim an area of the map for yourself"),
+                new ContentElement("p", ""),
+                new ContentElement("p", "You can also type '/simpleclaims claim' to claim the area"),
+                new ContentElement("p", "you are in, or '/simpleclaims unclaim' to release it.")
+        ));
+
+        // Page 8: Death
+        PageConfig deathPage = new PageConfig();
+        deathPage.setTitle("Death");
+        deathPage.setButtonTitle("Death");
+        deathPage.setElements(Arrays.asList(
+                new ContentElement("p", "When you die, some of your equipment, tools, and weapons may be"),
+                new ContentElement("p", "lost."),
+                new ContentElement("p", ""),
+                new ContentElement("p", "A coffin containing your items will remain where you died until"),
+                new ContentElement("p", "someone retrieves them.")
+        ));
+
+        // Page 9: Fishing
+        PageConfig fishingPage = new PageConfig();
+        fishingPage.setTitle("Fishing");
+        fishingPage.setButtonTitle("Fishing");
+        fishingPage.setElements(Arrays.asList(
+                new ContentElement("p", "Craft a fishing rod through your inventory."),
+                new ContentElement("p", ""),
+                new ContentElement("p", "Place the bait in the water by right-clicking and wait"),
+                new ContentElement("p", "a few moments."),
+                new ContentElement("p", ""),
+                new ContentElement("p", "When pulling the bait out of the water, you may have caught a fish.")
+        ));
+
+        // Page 10: Mount
+        PageConfig mountPage = new PageConfig();
+        mountPage.setTitle("Mount");
+        mountPage.setButtonTitle("Mount");
+        mountPage.setElements(Arrays.asList(
+                new ContentElement("p", "Approach a horse and press F to mount it."),
+                new ContentElement("p", ""),
+                new ContentElement("p", "Type '/mount dismount' to return to walking on foot.")
+        ));
+
+        config.pages = new PageConfig[] {
+                commandsPage, levelPage, mapPage, inventoryPage, parryPage,
+                durabilityPage, claimingPage, deathPage, fishingPage, mountPage
+        };
         return config;
     }
 

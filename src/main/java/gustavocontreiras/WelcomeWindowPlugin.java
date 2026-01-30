@@ -36,12 +36,15 @@ public class WelcomeWindowPlugin extends JavaPlugin {
             config.get().setBackButtonText(defaults.getBackButtonText());
             config.get().setNextButtonText(defaults.getNextButtonText());
             config.get().setDoneButtonText(defaults.getDoneButtonText());
+            config.get().setPageCounterText(defaults.getPageCounterText());
             config.get().setMenuWidth(defaults.getMenuWidth());
             config.get().setContainerWidth(defaults.getContainerWidth());
             config.get().setContainerHeight(defaults.getContainerHeight());
             config.get().setFontSize(defaults.getFontSize());
             config.get().setAlwaysShow(defaults.getAlwaysShow());
             config.get().setDebug(defaults.getDebug());
+            config.get().setShowPageCounter(defaults.getShowPageCounter());
+            config.get().setAllowExitOnAnyPage(defaults.getAllowExitOnAnyPage());
             config.get().setPages(defaults.getPages());
         }
         config.save();

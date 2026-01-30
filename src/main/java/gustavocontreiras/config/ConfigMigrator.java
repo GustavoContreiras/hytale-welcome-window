@@ -165,6 +165,12 @@ public class ConfigMigrator {
                     if (el.getId() != null && !el.getId().isEmpty()) {
                         elObj.addProperty("Id", el.getId());
                     }
+                    if (el.getWidth() > 0) {
+                        elObj.addProperty("Width", el.getWidth());
+                    }
+                    if (el.getHeight() > 0) {
+                        elObj.addProperty("Height", el.getHeight());
+                    }
                     elements.add(elObj);
                 }
                 pageObj.add("Elements", elements);
