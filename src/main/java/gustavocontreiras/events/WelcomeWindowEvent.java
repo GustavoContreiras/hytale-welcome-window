@@ -189,6 +189,7 @@ public class WelcomeWindowEvent {
                         // Disable the button if it's the current page
                         if (buttonIndex == currentPageIndex) {
                             commandBuilder.set(selector + ".Disabled", true);
+                            commandBuilder.set(selector + ".Style.Disabled.Background", "#1a2d40");
                         }
                     });
 
