@@ -24,11 +24,18 @@ public class WelcomeWindowEvent {
 
     public static void onPlayerReady(PlayerReadyEvent event) {
         Player player = event.getPlayer();
-        // player.sendMessage(Message.raw("[WelcomeWindow] start"));
 
         // Load configuration to check alwaysShow setting
         WelcomeConfig config = WelcomeWindowPlugin.getInstance().getWelcomeConfig().get();
         boolean alwaysShow = config.getAlwaysShow();
+
+        // Skip showing the window if the player's current world is in the HideInWorlds list
+        if (alwaysShow) {
+            String worldName = player.getWorld().getName();
+            if (config.getHideInWorlds().contains(worldName)) {
+                return;
+            }
+        }
 
         // Show window if alwaysShow is true, or if it's the player's first spawn
         if (alwaysShow || player.isFirstSpawn()) {

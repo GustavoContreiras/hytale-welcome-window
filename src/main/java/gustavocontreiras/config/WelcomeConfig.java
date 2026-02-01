@@ -46,6 +46,9 @@ public class WelcomeConfig {
             .append(new KeyedCodec<>("AllowExitOnAnyPage", Codec.BOOLEAN),
                     (config, value) -> config.allowExitOnAnyPage = value,
                     (config) -> config.allowExitOnAnyPage).add()
+            .append(new KeyedCodec<>("HideInWorlds", new ArrayCodec<>(Codec.STRING, String[]::new)),
+                    (config, value) -> config.hideInWorlds = value,
+                    (config) -> config.hideInWorlds).add()
             .append(new KeyedCodec<>("Pages", new ArrayCodec<>(PageConfig.CODEC, PageConfig[]::new)),
                     (config, value) -> config.pages = value,
                     (config) -> config.pages).add()
@@ -63,6 +66,7 @@ public class WelcomeConfig {
     private boolean showPageCounter = true;
     private String pageCounterText = "Page";
     private boolean allowExitOnAnyPage = false;
+    private String[] hideInWorlds = new String[0];
     private PageConfig[] pages = new PageConfig[0];
 
     public WelcomeConfig() {
@@ -308,6 +312,14 @@ public class WelcomeConfig {
 
     public void setAllowExitOnAnyPage(boolean allowExitOnAnyPage) {
         this.allowExitOnAnyPage = allowExitOnAnyPage;
+    }
+
+    public List<String> getHideInWorlds() {
+        return Arrays.asList(hideInWorlds);
+    }
+
+    public void setHideInWorlds(List<String> hideInWorlds) {
+        this.hideInWorlds = hideInWorlds.toArray(new String[0]);
     }
 
     public List<PageConfig> getPages() {

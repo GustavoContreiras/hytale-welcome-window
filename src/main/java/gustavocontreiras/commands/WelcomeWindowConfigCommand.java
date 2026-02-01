@@ -75,6 +75,13 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
             return;
         }
 
+        String hideInWorldsHtml = state.alwaysShow.get() ? """
+                                    <div style="layout-mode: left; flex-weight: 1; anchor-bottom: 2; anchor-height: 30;">
+                                        <p style="font-size: 14; anchor-width: 110; anchor-height: 30; vertical-align: middle;">Hide In Worlds</p>
+                                        <input id="hideInWorlds" placeholder="e.g World2, World3" type="text" style="flex-weight: 1; anchor-left: 4;" />
+                                    </div>
+                """ : "";
+
         String html = """
             <div class="page-overlay">
                 <div class="container" data-hyui-title="WelcomeWindow Config" style="anchor-width: 900; anchor-height: 620;">
@@ -101,54 +108,57 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
                             </div>
 
                             <div style="anchor-height: 8;"></div>
-                            <p style="font-size: 16; color: #ffffff; anchor-bottom: 4;">Size Settings</p>
-
-                            <div style="layout-mode: left; anchor-bottom: 4; anchor-height: 30;">
-                                <p style="font-size: 14; anchor-width: 220; anchor-height: 30; vertical-align: middle;">Menu Width</p>
-                                <input id="menuWidth" type="number" style="flex-weight: 1; anchor-height: 30;" />
-                            </div>
-                            <div style="layout-mode: left; anchor-bottom: 4; anchor-height: 30;">
-                                <p style="font-size: 14; anchor-width: 220; anchor-height: 30; vertical-align: middle;">Container Width</p>
-                                <input id="containerWidth" type="number" style="flex-weight: 1; anchor-height: 30;" />
-                            </div>
-                            <div style="layout-mode: left; anchor-bottom: 4; anchor-height: 30;">
-                                <p style="font-size: 14; anchor-width: 220; anchor-height: 30; vertical-align: middle;">Container Height</p>
-                                <input id="containerHeight" type="number" style="flex-weight: 1; anchor-height: 30;" />
-                            </div>
-                            <div style="layout-mode: left; anchor-bottom: 4; anchor-height: 30;">
-                                <p style="font-size: 14; anchor-width: 220; anchor-height: 30; vertical-align: middle;">Font Size</p>
-                                <input id="fontSize" type="number" style="flex-weight: 1; anchor-height: 30;" />
-                            </div>
-
-                            <div style="anchor-height: 8;"></div>
                             <div style="layout-mode: left;">
                                 <div style="layout-mode: top; flex-weight: 1;">
-                                    <p style="font-size: 16; color: #ffffff; anchor-bottom: 4;">Toggle Settings</p>
+                                    <p style="font-size: 16; color: #ffffff; anchor-bottom: 4;">Size Settings</p>
 
                                     <div style="layout-mode: left; anchor-bottom: 4; anchor-height: 30;">
-                                        <p style="font-size: 14; anchor-width: 220; anchor-height: 30; vertical-align: middle;">Always Show</p>
-                                        <input id="alwaysShow" type="checkbox" value="false" />
+                                        <p style="font-size: 14; anchor-width: 220; anchor-height: 30; vertical-align: middle;">Menu Width</p>
+                                        <input id="menuWidth" type="number" style="flex-weight: 1; anchor-height: 30;" />
                                     </div>
                                     <div style="layout-mode: left; anchor-bottom: 4; anchor-height: 30;">
-                                        <p style="font-size: 14; anchor-width: 220; anchor-height: 30; vertical-align: middle;">Debug</p>
-                                        <input id="debug" type="checkbox" value="false" />
+                                        <p style="font-size: 14; anchor-width: 220; anchor-height: 30; vertical-align: middle;">Container Width</p>
+                                        <input id="containerWidth" type="number" style="flex-weight: 1; anchor-height: 30;" />
                                     </div>
                                     <div style="layout-mode: left; anchor-bottom: 4; anchor-height: 30;">
-                                        <p style="font-size: 14; anchor-width: 220; anchor-height: 30; vertical-align: middle;">Show Page Counter</p>
-                                        <input id="showPageCounter" type="checkbox" value="false" />
+                                        <p style="font-size: 14; anchor-width: 220; anchor-height: 30; vertical-align: middle;">Container Height</p>
+                                        <input id="containerHeight" type="number" style="flex-weight: 1; anchor-height: 30;" />
                                     </div>
                                     <div style="layout-mode: left; anchor-bottom: 4; anchor-height: 30;">
-                                        <p style="font-size: 14; anchor-width: 220; anchor-height: 30; vertical-align: middle;">Allow Exit On Any Page</p>
-                                        <input id="allowExitOnAnyPage" type="checkbox" value="false" />
+                                        <p style="font-size: 14; anchor-width: 220; anchor-height: 30; vertical-align: middle;">Font Size</p>
+                                        <input id="fontSize" type="number" style="flex-weight: 1; anchor-height: 30;" />
                                     </div>
                                 </div>
-                                <div style="layout-mode: top; flex-weight: 1; padding-left: 16;">
+                                <div style="layout-mode: top; flex-weight: 1; anchor-left: 16;">
                                     <p style="font-size: 16; color: #ffffff; anchor-bottom: 4;">Pages</p>
 
                                     <div style="layout-mode: left; anchor-bottom: 4; anchor-height: 30;">
                                         <button id="openPagesBtn" style="anchor-horizontal: 1;">Open Pages Configuration</button>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div style="anchor-height: 8;"></div>
+                            <p style="font-size: 16; color: #ffffff; anchor-bottom: 4;">Toggle Settings</p>
+
+                            <div style="layout-mode: left; flex-weight: 1; ">
+                                <div style="layout-mode: left; anchor-bottom: 4; anchor-height: 30;">
+                                    <p style="font-size: 14; anchor-width: 220; anchor-height: 30; vertical-align: middle;">Always Show</p>
+                                    <input id="alwaysShow" type="checkbox" value="false" />
+                                </div>
+                                """ + hideInWorldsHtml + """
+                            </div>
+                            <div style="layout-mode: left; anchor-bottom: 4; anchor-height: 30;">
+                                <p style="font-size: 14; anchor-width: 220; anchor-height: 30; vertical-align: middle;">Debug</p>
+                                <input id="debug" type="checkbox" value="false" />
+                            </div>
+                            <div style="layout-mode: left; anchor-bottom: 4; anchor-height: 30;">
+                                <p style="font-size: 14; anchor-width: 220; anchor-height: 30; vertical-align: middle;">Show Page Counter</p>
+                                <input id="showPageCounter" type="checkbox" value="false" />
+                            </div>
+                            <div style="layout-mode: left; anchor-bottom: 4; anchor-height: 30;">
+                                <p style="font-size: 14; anchor-width: 220; anchor-height: 30; vertical-align: middle;">Allow Exit On Any Page</p>
+                                <input id="allowExitOnAnyPage" type="checkbox" value="false" />
                             </div>
 
                         </div>
@@ -179,10 +189,24 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
         wireNumberField(page, "fontSize", state.fontSize.get().intValue(), state.fontSize);
 
         // Wire existing checkbox fields from state
-        wireCheckBox(page, "alwaysShow", state.alwaysShow.get(), state.alwaysShow);
+        // Custom handler for alwaysShow: re-renders the page to show/hide the hideInWorlds field
+        page.getById("alwaysShow", CheckBoxBuilder.class).ifPresent(field -> {
+            field.editElementAfter((commandBuilder, selector) -> {
+                commandBuilder.set(selector + " #CheckBox.Value", state.alwaysShow.get());
+            });
+            field.addEventListener(CustomUIEventBindingType.ValueChanged, (value, ctx) -> {
+                state.alwaysShow.set(value);
+                store.getExternalData().getWorld().execute(() -> openConfigEditor(player, store, state));
+            });
+        });
         wireCheckBox(page, "debug", state.debug.get(), state.debug);
         wireCheckBox(page, "showPageCounter", state.showPageCounter.get(), state.showPageCounter);
         wireCheckBox(page, "allowExitOnAnyPage", state.allowExitOnAnyPage.get(), state.allowExitOnAnyPage);
+
+        // Wire hideInWorlds field (only visible when alwaysShow is enabled)
+        if (state.alwaysShow.get()) {
+            wireTextField(page, "hideInWorlds", state.hideInWorlds.get(), state.hideInWorlds);
+        }
 
         // Wire "Open Pages Configuration" button
         page.getById("openPagesBtn", ButtonBuilder.class).ifPresent(button -> {
@@ -219,6 +243,19 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
                 cfg.setDebug(state.debug.get());
                 cfg.setShowPageCounter(state.showPageCounter.get());
                 cfg.setAllowExitOnAnyPage(state.allowExitOnAnyPage.get());
+
+                // Parse comma-separated world names and save
+                List<String> hideInWorldsList = new ArrayList<>();
+                String hideInWorldsStr = state.hideInWorlds.get();
+                if (hideInWorldsStr != null && !hideInWorldsStr.trim().isEmpty()) {
+                    for (String worldName : hideInWorldsStr.split(",")) {
+                        String trimmed = worldName.trim();
+                        if (!trimmed.isEmpty()) {
+                            hideInWorldsList.add(trimmed);
+                        }
+                    }
+                }
+                cfg.setHideInWorlds(hideInWorldsList);
 
                 // Save page data from state
                 List<PageConfig> updatedPages = new ArrayList<>();
@@ -613,6 +650,7 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
         final AtomicReference<Boolean> debug;
         final AtomicReference<Boolean> showPageCounter;
         final AtomicReference<Boolean> allowExitOnAnyPage;
+        final AtomicReference<String> hideInWorlds;
 
         final List<AtomicReference<String>> pageTitles;
         final List<AtomicReference<String>> pageButtonTitles;
@@ -634,6 +672,7 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
             this.debug = new AtomicReference<>(cfg.getDebug());
             this.showPageCounter = new AtomicReference<>(cfg.getShowPageCounter());
             this.allowExitOnAnyPage = new AtomicReference<>(cfg.getAllowExitOnAnyPage());
+            this.hideInWorlds = new AtomicReference<>(String.join(", ", cfg.getHideInWorlds()));
 
             this.pageTitles = new ArrayList<>();
             this.pageButtonTitles = new ArrayList<>();
