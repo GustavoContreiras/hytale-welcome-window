@@ -48,3 +48,5 @@ au/
 com/
 Common/
 nul
+
+!src/main/resources/Common
