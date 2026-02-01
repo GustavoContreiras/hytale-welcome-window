@@ -1,3 +1,15 @@
+# [2.4.0](https://github.com/GustavoContreiras/hytale-welcome-window/compare/v2.3.1...v2.4.0) (2026-02-01)
+
+
+### Bug Fixes
+
+* use local welcome image instead of remote ([c517a40](https://github.com/GustavoContreiras/hytale-welcome-window/commit/c517a404a7727714e6f15a0437de8303631c0b1a))
+
+
+### Features
+
+* add luckperms support ([ca3215a](https://github.com/GustavoContreiras/hytale-welcome-window/commit/ca3215aaf0ebce2377782debe581193fd1cc6910))
+
 ## [2.3.1](https://github.com/GustavoContreiras/hytale-welcome-window/compare/v2.3.0...v2.3.1) (2026-01-30)
 
 
