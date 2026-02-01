@@ -50,5 +50,6 @@ Common/
 nul
 org/jsoup
 HyUI-0.6.0-all
+cfr-0.152.jar
 
 !src/main/resources/Common
