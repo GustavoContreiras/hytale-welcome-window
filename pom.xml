@@ -27,9 +27,9 @@
         <dependency>
             <groupId>au.ellie</groupId>
             <artifactId>HyUI</artifactId>
-            <version>0.5.5</version>
+            <version>0.6.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/HyUI-0.5.5-all.jar</systemPath>
+            <systemPath>${project.basedir}/lib/HyUI-0.6.0-all.jar</systemPath>
         </dependency>
         <!-- Gson for JSON parsing -->
         <dependency>

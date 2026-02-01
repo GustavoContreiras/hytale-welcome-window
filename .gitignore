@@ -48,5 +48,7 @@ au/
 com/
 Common/
 nul
+org/jsoup
+HyUI-0.6.0-all
 
 !src/main/resources/Common
