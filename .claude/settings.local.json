@@ -17,7 +17,9 @@
       "Bash(java:*)",
       "Bash(python3:*)",
       "WebFetch(domain:docs.curseforge.com)",
-      "Bash(ls -la \"C:\\\\dev\\\\hytale\\\\hytale-welcome-window\\\\Common\\\\UI\\\\Custom\\\\Pages\\\\Elements\"\" 2>/dev/null || echo \"Directory not found \")"
+      "Bash(ls -la \"C:\\\\dev\\\\hytale\\\\hytale-welcome-window\\\\Common\\\\UI\\\\Custom\\\\Pages\\\\Elements\"\" 2>/dev/null || echo \"Directory not found \")",
+      "WebFetch(domain:luckperms.net)",
+      "WebFetch(domain:hytale.game)"
     ]
   }
 }

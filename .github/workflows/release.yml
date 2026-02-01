@@ -87,7 +87,7 @@ jobs:
           METADATA=$(jq -n \
             --arg changelog "$RELEASE_NOTES" \
             --arg displayName "WelcomeWindow-$CLEAN_VERSION.jar" \
-            '{changelog: $changelog, changelogType: "markdown", displayName: $displayName, releaseType: "release", relations: {projects: [{slug: "hyui", type: "requiredDependency"}]}}')
+            '{changelog: $changelog, changelogType: "markdown", displayName: $displayName, releaseType: "release", relations: {projects: [{slug: "hyui", type: "requiredDependency"}, {slug: "luckperms", type: "optionalDependency"}]}}')
 
           echo "Metadata: $METADATA"
 

@@ -16,7 +16,6 @@ import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncCommand;
 import com.hypixel.hytale.server.core.entity.entities.Player;
-import com.hypixel.hytale.server.core.permissions.PermissionsModule;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -30,7 +29,6 @@ import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -47,13 +45,6 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
         var sender = context.sender();
         if (!(sender instanceof Player player)) {
             context.sendMessage(Message.raw("This command can only be used by players."));
-            return CompletableFuture.completedFuture(null);
-        }
-
-        // Check if player is OP
-        Set<String> groups = PermissionsModule.get().getGroupsForUser(player.getUuid());
-        if (!groups.contains("OP")) {
-            context.sendMessage(Message.raw("[WelcomeWindow] You need OP permissions to edit the config."));
             return CompletableFuture.completedFuture(null);
         }
 
