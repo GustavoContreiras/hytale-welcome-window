@@ -355,9 +355,9 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
                                 <select id="elTag_%d" style="anchor-width: 80;"></select>
                                 <input id="elChild_%d" type="text" style="flex-weight: 1; padding-left: 4;" />
                                 <p style="font-size: 12; anchor-width: 20; padding-left: 4;">W</p>
-                                <input id="elWidth_%d" type="number" style="anchor-width: 60;" />
+                                <input id="elWidth_%d" type="number" style="anchor-width: 60; anchor-height: 30;" />
                                 <p style="font-size: 12; anchor-width: 16; padding-left: 4;">H</p>
-                                <input id="elHeight_%d" type="number" style="anchor-width: 60;" />
+                                <input id="elHeight_%d" type="number" style="anchor-width: 60; anchor-height: 30;" />
                                 <select id="elStyle_%d" style="anchor-width: 80; padding-left: 4;"></select>
                                 <button id="removeEl_%d" style="anchor-max-width: 30; padding-left: 4;">-</button>
                             </div>
