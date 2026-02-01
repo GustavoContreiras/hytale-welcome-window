@@ -1,3 +1,15 @@
+# [2.5.0](https://github.com/GustavoContreiras/hytale-welcome-window/compare/v2.4.0...v2.5.0) (2026-02-01)
+
+
+### Bug Fixes
+
+* fix pages configuration not opening when running your own local world ([bb32ec5](https://github.com/GustavoContreiras/hytale-welcome-window/commit/bb32ec5956cb105fe2dc43e6cf348b393401f629))
+
+
+### Features
+
+* add config property HideInWorlds to allow hide the welcome window in specific worlds when AlwaysShow is true ([07c9a7a](https://github.com/GustavoContreiras/hytale-welcome-window/commit/07c9a7a6a3c9c58e2ea4a0ff4d19834b7126e849))
+
 # [2.4.0](https://github.com/GustavoContreiras/hytale-welcome-window/compare/v2.3.1...v2.4.0) (2026-02-01)
 
 
