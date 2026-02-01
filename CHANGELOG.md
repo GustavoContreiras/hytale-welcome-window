@@ -1,3 +1,10 @@
+## [2.5.1](https://github.com/GustavoContreiras/hytale-welcome-window/compare/v2.5.0...v2.5.1) (2026-02-01)
+
+
+### Bug Fixes
+
+* update pom to fix build ([0e5bf79](https://github.com/GustavoContreiras/hytale-welcome-window/commit/0e5bf797b27221aad54d6fa9d0ff869b2a2889fe))
+
 # [2.5.0](https://github.com/GustavoContreiras/hytale-welcome-window/compare/v2.4.0...v2.5.0) (2026-02-01)
 
 
