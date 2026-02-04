@@ -83,7 +83,7 @@ public class WelcomeConfig {
         commandsPage.setTitle("Welcome to Hytale");
         commandsPage.setButtonTitle("Commands");
         ContentElement imgElement = new ContentElement("img",
-                "welcome.png",
+                "https://www.clipartmax.com/png/full/3-39096_welcome-clipart-welcome-clipart.png",
                 "layout-mode: center;");
         imgElement.setWidth(482);
         imgElement.setHeight(134);

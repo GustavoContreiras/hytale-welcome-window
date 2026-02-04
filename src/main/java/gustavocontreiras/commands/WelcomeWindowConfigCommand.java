@@ -327,7 +327,7 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
                                 <div style="layout-mode: left; flex-weight: 1;">
                                     <select id="pageSelector" style="flex-weight: 1; anchor-left: 0;"></select>
                                     <button id="addPageBtn" style="anchor-height: 30; padding-left: 4">Add page</button>
-                                    <button id="removePageBtn" data-hyui-default-bg="#FF0000" style="anchor-height: 30; padding-left: 4">Remove page</button>
+                                    <button id="removePageBtn" style="anchor-height: 30; padding-left: 4">Remove page</button>
                                 </div>
                             </div>
             """);
@@ -355,7 +355,7 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
                                 <button id="elUp_%d" style="anchor-min-width: 100; anchor-height: 38;">UP</button>
                                 <button id="elDown_%d" style="anchor-min-width: 100; padding-left: 4; anchor-height: 38;">DOWN</button>
                                 <select id="elTag_%d" style="padding-left: 4; anchor-width: 80;"></select>
-                                <input id="elChild_%d" type="text" style="flex-weight: 1; padding-left: 4;" data-hyui-tooltiptext="You can use URLs too.\n\nExample:\nhttps://www.clipartmax.com/png/full/3-39096_welcome-clipart-welcome-clipart.png"/>
+                                <input id="elChild_%d" type="text" style="flex-weight: 1; padding-left: 4;" data-hyui-tooltiptext="Image name or URL.\n\nTo use local images:\n1. Open the .jar with a zip manager (e.g. 7-Zip)\n2. Put the image in Common/UI/Custom/\n3. The file name must end with @2x.png\n4. Use the name without @2x\n   (e.g. myimage@2x.png -> myimage.png)\n\nYou can also use URLs:\nhttps://example.com/image.png"/>
                                 <p style="font-size: 12; anchor-width: 20; padding-left: 4;">W</p>
                                 <input id="elWidth_%d" type="number" style="anchor-width: 60; anchor-height: 30;" />
                                 <p style="font-size: 12; anchor-width: 16; padding-left: 4;">H</p>

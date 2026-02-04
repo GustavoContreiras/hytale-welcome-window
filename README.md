@@ -17,6 +17,19 @@ Use it to explain which mods you added to your server and how to use them.
 
 PS: Use empty strings (`""`) in the paragraphs to have more space between the texts.
 
+### Using images
+
+You can use either URLs or local images.
+
+**URLs:** Set the image content to a full URL (e.g. `https://example.com/image.png` - if the site doesn't let you get it, it will crash).
+
+**Local images:**
+
+1. Open the `.jar` file with a zip manager (e.g. 7-Zip)
+2. Put the image file inside `Common/UI/Custom/`
+3. The file name must end with `@2x.png` (e.g. `welcome@2x.png`)
+4. In the config, use the name without `@2x` (e.g. `welcome.png`)
+
 ### Player
 
 - Run `/welcome` if you want to see the window again
@@ -50,7 +63,7 @@ PS: Use empty strings (`""`) in the paragraphs to have more space between the te
       "Elements": [
         {
           "Element": "img",
-          "Content": "welcome.png",
+          "Content": "https://www.clipartmax.com/png/full/3-39096_welcome-clipart-welcome-clipart.png",
           "Style": "layout-mode: center;",
           "Id": "",
           "Width": 482,
