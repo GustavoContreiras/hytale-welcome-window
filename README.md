@@ -50,11 +50,27 @@ PS: Use empty strings (`""`) in the paragraphs to have more space between the te
       "Elements": [
         {
           "Element": "img",
-          "Content": "https://www.clipartmax.com/png/full/3-39096_welcome-clipart-welcome-clipart.png",
+          "Content": "welcome.png",
           "Style": "layout-mode: center;",
           "Id": "",
           "Width": 482,
           "Height": 134
+        },
+        {
+          "Element": "p",
+          "Content": "",
+          "Style": "",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
+        },
+        {
+          "Element": "p",
+          "Content": "Check commands below to start",
+          "Style": "font-size: 22; anchor-left: 114",
+          "Id": "",
+          "Width": 0,
+          "Height": 0
         },
         {
           "Element": "p",
@@ -131,7 +147,7 @@ PS: Use empty strings (`""`) in the paragraphs to have more space between the te
         {
           "Element": "p",
           "Content": "Press ENTER or / to open the chat and execute these commands",
-          "Style": "",
+          "Style": "font-size: 12;",
           "Id": "",
           "Width": 0,
           "Height": 0

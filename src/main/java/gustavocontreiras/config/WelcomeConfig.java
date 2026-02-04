@@ -90,6 +90,8 @@ public class WelcomeConfig {
         commandsPage.setElements(Arrays.asList(
             imgElement,
             new ContentElement("p", ""),
+            new ContentElement("p", "Check commands below to start", "font-size: 22; anchor-left: 114"),
+            new ContentElement("p", ""),
             new ContentElement("p", "/help - shows all available commands"),
             new ContentElement("p", "/welcome - shows this window"),
             new ContentElement("p", "/modlist - shows all installed mods"),
@@ -98,7 +100,7 @@ public class WelcomeConfig {
             new ContentElement("p", "/hidearmor - hide your equipment on your skin"),
             new ContentElement("p", "/sit - allows changing the character's sitting positions"),
             new ContentElement("p", ""),
-            new ContentElement("p", "Press ENTER or / to open the chat and execute these commands")
+            new ContentElement("p", "Press ENTER or / to open the chat and execute these commands", "font-size: 12;")
         ));
 
         // Page 2: Level

@@ -318,7 +318,7 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
         StringBuilder htmlBuilder = new StringBuilder();
         htmlBuilder.append("""
             <div class="page-overlay">
-                <div class="container" data-hyui-title="Pages Configuration" style="anchor-width: 900; anchor-height: 700;">
+                <div class="container" data-hyui-title="Pages Configuration" style="anchor-width: 1400; anchor-height: 900;">
                     <div style="layout-mode: top; flex-weight: 1; padding: 8;">
                         <div style="layout-mode: topscrolling; flex-weight: 1;">
 
@@ -327,7 +327,7 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
                                 <div style="layout-mode: left; flex-weight: 1;">
                                     <select id="pageSelector" style="flex-weight: 1; anchor-left: 0;"></select>
                                     <button id="addPageBtn" style="anchor-height: 30; padding-left: 4">Add page</button>
-                                    <button id="removePageBtn" style="anchor-height: 30; padding-left: 4">Remove page</button>
+                                    <button id="removePageBtn" data-hyui-default-bg="#FF0000" style="anchor-height: 30; padding-left: 4">Remove page</button>
                                 </div>
                             </div>
             """);
@@ -351,26 +351,30 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
                 boolean isImg = "img".equals(elements.get(i).element.get());
                 if (isImg) {
                     htmlBuilder.append("""
-                            <div style="layout-mode: center; anchor-top: 2;">
-                                <select id="elTag_%d" style="anchor-width: 80;"></select>
-                                <input id="elChild_%d" type="text" style="flex-weight: 1; padding-left: 4;" />
+                            <div style="layout-mode: left; anchor-top: 2;">
+                                <button id="elUp_%d" style="anchor-min-width: 100; anchor-height: 38;">UP</button>
+                                <button id="elDown_%d" style="anchor-min-width: 100; padding-left: 4; anchor-height: 38;">DOWN</button>
+                                <select id="elTag_%d" style="padding-left: 4; anchor-width: 80;"></select>
+                                <input id="elChild_%d" type="text" style="flex-weight: 1; padding-left: 4;" data-hyui-tooltiptext="You can use URLs too.\n\nExample:\nhttps://www.clipartmax.com/png/full/3-39096_welcome-clipart-welcome-clipart.png"/>
                                 <p style="font-size: 12; anchor-width: 20; padding-left: 4;">W</p>
                                 <input id="elWidth_%d" type="number" style="anchor-width: 60; anchor-height: 30;" />
                                 <p style="font-size: 12; anchor-width: 16; padding-left: 4;">H</p>
                                 <input id="elHeight_%d" type="number" style="anchor-width: 60; anchor-height: 30;" />
-                                <select id="elStyle_%d" style="anchor-width: 80; padding-left: 4;"></select>
-                                <button id="removeEl_%d" style="anchor-max-width: 30; padding-left: 4;">-</button>
+                                <select id="elStyle_%d" style="anchor-width: 100; padding-left: 4;"></select>
+                                <button id="removeEl_%d" style="anchor-min-width: 100; padding-left: 4; anchor-height: 38;">-</button>
                             </div>
-                    """.formatted(i, i, i, i, i, i));
+                    """.formatted(i, i, i, i, i, i, i, i));
                 } else {
                     htmlBuilder.append("""
-                            <div style="layout-mode: center; anchor-top: 2;">
-                                <select id="elTag_%d" style="anchor-width: 80;"></select>
+                            <div style="layout-mode: left; anchor-top: 2;">
+                                <button id="elUp_%d" style="anchor-min-width: 100; anchor-height: 38;">UP</button>
+                                <button id="elDown_%d" style="anchor-min-width: 100; padding-left: 4; anchor-height: 38;">DOWN</button>
+                                <select id="elTag_%d" style="padding-left: 4; anchor-width: 80;"></select>
                                 <input id="elChild_%d" type="text" style="flex-weight: 2; padding-left: 4;" />
-                                <input id="elStyle_%d" type="text" style="flex-weight: 1; padding-left: 4;" />
-                                <button id="removeEl_%d" style="anchor-max-width: 30; padding-left: 4;">-</button>
+                                <input id="elStyle_%d" type="text" style="flex-weight: 1; padding-left: 4;" data-hyui-tooltiptext="Set it as HyUI HTML 'style' property\n\nExample:\nfont-size: 12; anchor-height: 30;"/>
+                                <button id="removeEl_%d" style="anchor-min-width: 100; padding-left: 4; anchor-height: 38;">-</button>
                             </div>
-                    """.formatted(i, i, i, i));
+                    """.formatted(i, i, i, i, i, i));
                 }
             }
         }
@@ -467,6 +471,28 @@ public class WelcomeWindowConfigCommand extends AbstractAsyncCommand {
                 } else {
                     wireTextField(page, "elStyle_" + i, editorEl.style.get(), editorEl.style);
                 }
+
+                page.getById("elUp_" + i, ButtonBuilder.class).ifPresent(button -> {
+                    button.addEventListener(CustomUIEventBindingType.Activating, clickEvent -> {
+                        if (elIndex > 0) {
+                            EditorElement temp = elements.get(elIndex);
+                            elements.set(elIndex, elements.get(elIndex - 1));
+                            elements.set(elIndex - 1, temp);
+                            openPagesEditor(player, store, state);
+                        }
+                    });
+                });
+
+                page.getById("elDown_" + i, ButtonBuilder.class).ifPresent(button -> {
+                    button.addEventListener(CustomUIEventBindingType.Activating, clickEvent -> {
+                        if (elIndex < elements.size() - 1) {
+                            EditorElement temp = elements.get(elIndex);
+                            elements.set(elIndex, elements.get(elIndex + 1));
+                            elements.set(elIndex + 1, temp);
+                            openPagesEditor(player, store, state);
+                        }
+                    });
+                });
 
                 page.getById("removeEl_" + i, ButtonBuilder.class).ifPresent(button -> {
                     button.addEventListener(CustomUIEventBindingType.Activating, clickEvent -> {
