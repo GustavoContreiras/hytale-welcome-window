@@ -90,6 +90,7 @@ jobs:
             '{changelog: $changelog, changelogType: "markdown", displayName: $displayName, releaseType: "release", relations: {projects: [{slug: "hyui", type: "requiredDependency"}, {slug: "luckperms", type: "optionalDependency"}]}}')
 
           echo "Metadata: $METADATA"
+          echo "$METADATA" > metadata.json
 
           # Upload to CurseForge (unified platform)
           UPLOAD_URL="https://www.curseforge.com/api/projects/${CURSEFORGE_PROJECT_ID}/upload-file"
@@ -97,7 +98,7 @@ jobs:
 
           RESPONSE=$(curl -L -X POST \
             -H "X-Api-Token: $CURSEFORGE_API_TOKEN" \
-            -F "metadata=$METADATA" \
+            -F "metadata=<metadata.json" \
             -F "file=@$JAR_FILE" \
             "$UPLOAD_URL" \
             -w "\n%{http_code}")
