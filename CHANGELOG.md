@@ -1,3 +1,15 @@
+# [2.6.0](https://github.com/GustavoContreiras/hytale-welcome-window/compare/v2.5.1...v2.6.0) (2026-02-04)
+
+
+### Bug Fixes
+
+* fix readme example; fix buttons in pages editor; add tooltips; allow swap elements position ([1cc337e](https://github.com/GustavoContreiras/hytale-welcome-window/commit/1cc337e4dbef52e76fc65af7da30c994a774085d))
+
+
+### Features
+
+* better tooltip for img element, explaining how to use local image ([13e5385](https://github.com/GustavoContreiras/hytale-welcome-window/commit/13e5385a58bdad41c1642c4a623f74d6b775066e))
+
 ## [2.5.1](https://github.com/GustavoContreiras/hytale-welcome-window/compare/v2.5.0...v2.5.1) (2026-02-01)
 
 
