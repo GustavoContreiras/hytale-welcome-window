@@ -4,6 +4,13 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      skip_version_bump:
+        description: 'Skip version bump (build and upload current version)'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   release:
@@ -40,27 +47,36 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Install semantic-release and plugins
+        if: ${{ !inputs.skip_version_bump }}
         run: |
           npm install -g semantic-release @semantic-release/changelog @semantic-release/exec @semantic-release/git @semantic-release/github
 
       - name: Run semantic-release
+        if: ${{ !inputs.skip_version_bump }}
         id: semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npx semantic-release
 
+      - name: Get current version from pom.xml
+        if: ${{ inputs.skip_version_bump }}
+        id: pom-version
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
       - name: Build JAR
-        if: steps.semantic-release.outputs.version != ''
+        if: ${{ inputs.skip_version_bump || steps.semantic-release.outputs.version != '' }}
         run: |
           mvn clean package -DskipTests
 
       - name: Upload JAR to CurseForge
-        if: steps.semantic-release.outputs.version != ''
+        if: ${{ inputs.skip_version_bump || steps.semantic-release.outputs.version != '' }}
         env:
           CURSEFORGE_API_TOKEN: ${{ secrets.CURSEFORGE_API_TOKEN }}
           CURSEFORGE_PROJECT_ID: ${{ vars.CURSEFORGE_PROJECT_ID }}
-          VERSION: ${{ steps.semantic-release.outputs.version }}
+          VERSION: ${{ inputs.skip_version_bump && steps.pom-version.outputs.version || steps.semantic-release.outputs.version }}
         run: |
           JAR_FILE=$(find target -name "*.jar" -not -name "*-sources.jar" -not -name "*-javadoc.jar" | head -n 1)
           
